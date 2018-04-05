@@ -52,13 +52,14 @@ module.exports = {
      * @param  {String} contract
      * @return {JSON}
      */
-    getBalance: (address, asset, contractAddress) => {
+    getBalance: (address, asset, requesterPublicKey) => {
+        requesterPublicKey = requesterPublicKey || undefined
         const data = {
           address:         address,
           asset:           asset,
-          contractAddress: contractAddress
+          contractAddress: requesterPublicKey
         };
-        return bcxApi.postRequest(bcxApi.BCXBALANCE, data)
+        return bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data)
       },
 
     /** 
@@ -71,9 +72,9 @@ module.exports = {
     * @return {JSON}
     */
     txHistory: (address1, address2, asset, timestamp) => {
-        address2 = address2 || {};
-        asset = asset || {};
-        timestamp = timestamp || {};
+        address2 = address2 || undefined;
+        asset = asset || undefined;
+        timestamp = timestamp || undefined;
 
         const data = {
           address1:   address1,

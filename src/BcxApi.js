@@ -1,21 +1,19 @@
 var fetch = require("node-fetch");
 
-function BcxApi(headers, body, url) {
-    
-    this.SERVER_URL = "http://bcx-dev.pillarproject.io:8000";
-    this.BCXREGISTER_URL =  "/register-new-wallet";
-    this.BCXFCMIID_URL =    "/updatefcmiid";
-    this.BCXHISTORY_URL =   "/txhistory";
-    this.BCXBALANCE_URL =   "/balance";
+this.SERVER_URL = "https://bcx-dev.pillarproject.io";
+this.BCXREGISTER_URL =  this.SERVER_URL + "/register-new-wallet";
+this.BCXFCMIID_URL =    this.SERVER_URL + "/updatefcmiid";
+this.BCXHISTORY_URL =   this.SERVER_URL + "/txhistory";
+this.BCXBALANCE_URL =   this.SERVER_URL + "/balance";
 
-    BcxApi.prototype = {
-        postRequest: (body, url) =>     
+exports.postRequest = (url, body) => {          
+            Object.keys(body).forEach((key) => (body[key] == undefined) && delete body[key]);
+            console.log(JSON.stringify(body))
             fetch(url, { 
             method: 'POST',
             body:    JSON.stringify(body),
             headers: { 'Content-Type': 'application/json' },
             })
             .then(res => res.json())
-            }
-  }
-module.exports = BcxApi;
+            .then(json => console.log(json))
+    }
