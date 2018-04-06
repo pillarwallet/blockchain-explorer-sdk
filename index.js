@@ -52,14 +52,14 @@ module.exports = {
      * @param  {String} contract
      * @return {JSON}
      */
-    getBalance: (address, asset, requesterPublicKey) => {
-        requesterPublicKey = requesterPublicKey || undefined
+    getBalance: async (address, asset, requesterPublicKey) => {
+        requesterPublicKey = requesterPublicKey || undefined;
         const data = {
           address:         address,
           asset:           asset,
           contractAddress: requesterPublicKey
         };
-        return bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data)
+        return await bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data);
       },
 
     /** 

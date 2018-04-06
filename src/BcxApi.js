@@ -6,14 +6,19 @@ this.BCXFCMIID_URL =    this.SERVER_URL + "/updatefcmiid";
 this.BCXHISTORY_URL =   this.SERVER_URL + "/txhistory";
 this.BCXBALANCE_URL =   this.SERVER_URL + "/balance";
 
+
 exports.postRequest = (url, body) => {          
             Object.keys(body).forEach((key) => (body[key] == undefined) && delete body[key]);
-            console.log(JSON.stringify(body))
-            fetch(url, { 
-            method: 'POST',
-            body:    JSON.stringify(body),
-            headers: { 'Content-Type': 'application/json' },
-            })
+            let postBody = { 
+                method: 'POST',
+                body:    JSON.stringify({a:"1"}),
+                headers: { 'Content-Type': 'application/json' },
+                };
+            let response;    
+            fetch('http://httpbin.org/post', postBody)
             .then(res => res.json())
-            .then(json => console.log(json))
-    }
+            .then(json => {
+                response = json
+            });
+            return response
+    };
