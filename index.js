@@ -12,7 +12,7 @@ module.exports = {
     * @param  {String} signature
     * @return {JSON}
     */
-   registerWallet: (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
+   registerWallet: async (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
 
     const data = { 
         walletId:           walletId,
@@ -22,7 +22,7 @@ module.exports = {
         signature:          signature
 
         };
-        return bcxApi.postRequest(bcxApi.BCXREGISTER_URL, data)
+        return await bcxApi.postRequest(bcxApi.BCXREGISTER_URL, data)
   },
     /** 
     * Update the FCMIID
@@ -34,7 +34,7 @@ module.exports = {
     * @param  {String} signature
     * @return {JSON}
     */
-    updateFMCIID: (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
+    updateFMCIID: async (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
         const data = {
             walletId:           walletId,
             ethAddress:         ethAddress,
@@ -42,7 +42,7 @@ module.exports = {
             requesterPublicKey: serverPublicKey,
             signature:          signature
         };
-        return bcxApi.postRequest(bcxApi.BCXFCMIID_URL, data)
+        return await bcxApi.postRequest(bcxApi.BCXFCMIID_URL, data)
       },
      /** 
      * Get balance from BCX
@@ -71,7 +71,7 @@ module.exports = {
     * @param  {String} timestamp
     * @return {JSON}
     */
-    txHistory: (address1, address2, asset, timestamp) => {
+    txHistory: async (address1, address2, asset, timestamp) => {
         address2 = address2 || undefined;
         asset = asset || undefined;
         timestamp = timestamp || undefined;
@@ -82,6 +82,6 @@ module.exports = {
           asset:      asset,
           fromtmstmp: timestamp
         };
-        return bcxApi.postRequest(bcxApi.BCXHISTORY_URL, data)
+        return await bcxApi.postRequest(bcxApi.BCXHISTORY_URL, data)
       }
   };
