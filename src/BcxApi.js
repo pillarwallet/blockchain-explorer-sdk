@@ -7,38 +7,30 @@ this.BCXHISTORY_URL =   this.SERVER_URL + "/txhistory";
 this.BCXBALANCE_URL =   this.SERVER_URL + "/balance";
 
 
-exports.postRequest = async (url, body) => {
-        return await fetchRequests(url, body, 'POST')   
+exports.postRequest = (url, body) => {
+        return fetchRequests(url, body, 'POST')   
     }
-exports.getRequest = async (url, body) => {
-         return await fetchRequests(url, body, 'GET');
+exports.getRequest = (url, body) => {
+         return fetchRequests(url, body, 'GET');
     }
-exports.putRequest = async (url, body) => {
-         return await fetchRequests(url, body, 'PUT');
+exports.putRequest = (url, body) => {
+         return fetchRequests(url, body, 'PUT');
     }
-exports.deleteRequest = async (url, body) => {
-         return await fetchRequests(url, body, 'DELETE');
+exports.deleteRequest = (url, body) => {
+         return fetchRequests(url, body, 'DELETE');
     }
 
 
-let  fetchRequests = (url, body, type) => {
+let  fetchRequests = async (url, body, type) => {
     Object.keys(body).forEach((key) => (body[key] == undefined) && delete body[key]);
 
     let postBody = { 
         method: type,
         body:    JSON.stringify(body),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' }
         };
 
-    return fetch(url, postBody)
-            .then(function(res) {
-                return res.json();
-            })
-            .then(function(json) {
-                console.log(json) 
-                return json 
-            })
-            .catch(function(error) { 
-                console.log(error);
-            });
+    const response = await fetch(url, postBody)
+    return await response.json()
+
 }
