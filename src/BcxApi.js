@@ -7,21 +7,21 @@ this.BCXHISTORY_URL =   this.SERVER_URL + "/txhistory";
 this.BCXBALANCE_URL =   this.SERVER_URL + "/balance";
 
 
-exports.postRequest = (url, body) => {
-         return fetchRequests(url, body, 'POST');
+exports.postRequest = async (url, body) => {
+        return await fetchRequests(url, body, 'POST')   
     }
-exports.getRequest = (url, body) => {
-         return fetchRequests(url, body, 'GET');
+exports.getRequest = async (url, body) => {
+         return await fetchRequests(url, body, 'GET');
     }
-exports.putRequest = (url, body) => {
-         return fetchRequests(url, body, 'PUT');
+exports.putRequest = async (url, body) => {
+         return await fetchRequests(url, body, 'PUT');
     }
-exports.deleteRequest = (url, body) => {
-         return fetchRequests(url, body, 'DELETE');
+exports.deleteRequest = async (url, body) => {
+         return await fetchRequests(url, body, 'DELETE');
     }
-    
 
-let  fetchRequests = async (url, body, type) => {
+
+let  fetchRequests = (url, body, type) => {
     Object.keys(body).forEach((key) => (body[key] == undefined) && delete body[key]);
 
     let postBody = { 
@@ -30,9 +30,15 @@ let  fetchRequests = async (url, body, type) => {
         headers: { 'Content-Type': 'application/json' },
         };
 
-    await fetch(url, postBody)
-    .then(res => res.json())
-    .then(json => {
-        return json
-    })
+    return fetch(url, postBody)
+            .then(function(res) {
+                return res.json();
+            })
+            .then(function(json) {
+                console.log(json) 
+                return json 
+            })
+            .catch(function(error) { 
+                console.log(error);
+            });
 }

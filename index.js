@@ -12,17 +12,17 @@ module.exports = {
     * @param  {String} signature
     * @return {JSON}
     */
-   registerWallet: async (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
+   registerWallet: (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
 
-    const data = { 
-        walletId:           walletId,
-        ethAddress:         ethAddress,
-        fcmIID:             fcmIID,
-        requesterPublicKey: serverPublicKey,
-        signature:          signature
+        const data = { 
+            walletId:           walletId,
+            ethAddress:         ethAddress,
+            fcmIID:             fcmIID,
+            requesterPublicKey: serverPublicKey,
+            signature:          signature
 
         };
-        return await bcxApi.postRequest(bcxApi.BCXREGISTER_URL, data)
+        return bcxApi.postRequest(bcxApi.BCXREGISTER_URL, data)
   },
     /** 
     * Update the FCMIID
@@ -34,7 +34,8 @@ module.exports = {
     * @param  {String} signature
     * @return {JSON}
     */
-    updateFMCIID: async (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
+    updateFMCIID: (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
+        
         const data = {
             walletId:           walletId,
             ethAddress:         ethAddress,
@@ -42,7 +43,7 @@ module.exports = {
             requesterPublicKey: serverPublicKey,
             signature:          signature
         };
-        return await bcxApi.postRequest(bcxApi.BCXFCMIID_URL, data)
+        return bcxApi.postRequest(bcxApi.BCXFCMIID_URL, data)
       },
      /** 
      * Get balance from BCX
@@ -52,14 +53,14 @@ module.exports = {
      * @param  {String} contract
      * @return {JSON}
      */
-    getBalance: async (address, asset, requesterPublicKey) => {
-        requesterPublicKey = requesterPublicKey || undefined;
+    getBalance: (address, asset, requesterPublicKey = undefined) => {
+        
         const data = {
           address:         address,
           asset:           asset,
           contractAddress: requesterPublicKey
         };
-        return await bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data);
+        return bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data)
       },
 
     /** 
@@ -71,17 +72,15 @@ module.exports = {
     * @param  {String} timestamp
     * @return {JSON}
     */
-    txHistory: async (address1, address2, asset, timestamp) => {
-        address2 = address2 || undefined;
-        asset = asset || undefined;
-        timestamp = timestamp || undefined;
-
+    txHistory: (address1, address2 = undefined, asset = undefined, timestamp = undefined) => {
+        
         const data = {
           address1:   address1,
           address1:   address2,
           asset:      asset,
           fromtmstmp: timestamp
         };
-        return await bcxApi.postRequest(bcxApi.BCXHISTORY_URL, data)
+        Object.keys(data).forEach((key) => (body[key] == "ALL") && delete body[key]);
+        return bcxApi.postRequest(bcxApi.BCXHISTORY_URL, data)
       }
   };
