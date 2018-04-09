@@ -12,7 +12,7 @@ module.exports = {
     * @param  {String} signature
     * @return {JSON}
     */
-   registerWallet: (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
+   registerAccount: (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
 
         const data = { 
             walletId:           walletId,
@@ -34,14 +34,12 @@ module.exports = {
     * @param  {String} signature
     * @return {JSON}
     */
-    updateFMCIID: (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
+    updateFMCIID: (walletId, ethAddress, fcmIID) => {
         
         const data = {
             walletId:           walletId,
             ethAddress:         ethAddress,
-            fcmIID:             fcmIID,
-            requesterPublicKey: serverPublicKey,
-            signature:          signature
+            fcmIID:             fcmIID
         };
         return bcxApi.postRequest(bcxApi.BCXFCMIID_URL, data)
       },

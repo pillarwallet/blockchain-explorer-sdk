@@ -18,7 +18,43 @@ var bcx = require('bcx-api')
 
 ###### Registration
 
+```js
+var secp256k1 = require("secp256k1");
+var sha3 = require("ethereumjs-util");
+
+const parameters = 
+      {
+        walletId: 1234,
+        ethAddress: "0xabA31e585c4a221d9e196EA46c98793e0A0490bD",
+        fcmIID: "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV",
+        requesterPublicKey: "0x5eDa0D39f19C28731a64491eD48dF5EDB0945169"
+      }
+
+    const digest = sha3(JSON.stringify(parameters));
+    const signature = secp256k1.sign(hash, new Buffer(privateKey, "hex"));
+    bcx.registerAccount(walletID, ethAddress, fcmIID, requesterPublicKey, signature)
+```
+<details><summary>Response</summary><p>
+
+    [200] - NEW ACCOUNT WAS REGISTERED!
+
+</p></details>
+
 ###### FCMIID Uptade
+
+```js
+  walletId = 1234;
+  publicAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
+  newFCMIID =  "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV";
+
+  bcx.updateFCMIID(walletID, publicAddress, newFMCIID);
+```
+
+<details><p><summary>Response</summary>
+
+    [200] FCM IID UPDATED FOR ACCOUNT 1234
+
+</p></details>
 
 #### Balance and transaction history
 
