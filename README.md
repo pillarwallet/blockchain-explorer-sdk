@@ -11,7 +11,8 @@ $ npm install bcx-api
 ## Usage
 
 ```js
-var bcx = require('bcx-api')
+//var bcx = require('bcx-api')
+var sdk = require('./index.js')
 ```
 
 #### Account and FCMIID
