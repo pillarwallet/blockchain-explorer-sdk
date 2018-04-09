@@ -31,7 +31,7 @@ balance = sdk.getBalance(accountAddress, asset)
 ```
 <details><summary>Response</summary><p>
 
-```json
+```js
     { 
         address: '0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895',
         asset: 'ETH',
@@ -50,7 +50,7 @@ history = sdk.txHistory(accountAddress, "ALL", "ALL", 0)
 
 <details><summary>Response</summary><p>
 
-```json
+```js
 {
   [
   transaction: 
