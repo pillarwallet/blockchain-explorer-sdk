@@ -32,7 +32,7 @@ const parameters =
       }
 
     const digest = sha3(JSON.stringify(parameters));
-    const signature = secp256k1.sign(hash, new Buffer(privateKey, "hex"));
+    const signature = secp256k1.sign(digest, new Buffer(privateKey, "hex"));
     bcx.registerAccount(walletID, ethAddress, fcmIID, requesterPublicKey, signature)
 ```
 <details><summary>Response</summary><p>
