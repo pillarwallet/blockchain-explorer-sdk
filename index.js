@@ -24,21 +24,36 @@ module.exports = {
         };
         return bcxApi.postRequest(bcxApi.BCXREGISTER_URL, data)
   },
+
+    /** 
+    * Unregister a wallet 
+    *
+    * @param  {String} walletId
+    * @param  {String} ethAddress
+    * @param  {String} signature
+    * @return {JSON}
+    */
+   unregisterAccount: (walletId, ethAddress, signature) => {
+
+    const data = { 
+        walletId:           walletId,
+        ethAddress:         ethAddress,
+        signature:          signature
+
+    };
+    return bcxApi.postRequest(bcxApi.BCXUNREGISTER_URL, data)
+},
     /** 
     * Update the FCMIID
     *
     * @param  {String} walletId
-    * @param  {String} ethAddress
     * @param  {String} fcmIID
-    * @param  {String} serverPublicKey
-    * @param  {String} signature
     * @return {JSON}
     */
-    updateFMCIID: (walletId, ethAddress, fcmIID) => {
+    updateFMCIID: (walletId, fcmIID) => {
         
         const data = {
             walletId:           walletId,
-            ethAddress:         ethAddress,
             fcmIID:             fcmIID
         };
         return bcxApi.postRequest(bcxApi.BCXFCMIID_URL, data)
