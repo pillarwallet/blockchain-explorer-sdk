@@ -4,19 +4,19 @@ module.exports = {
 
     /** 
     * Register a new wallet on BCX
-    *
+    * @method registerAccount
     * @param  {String} walletId
-    * @param  {String} ethAddress
+    * @param  {String} walletAddress
     * @param  {String} fcmIID
     * @param  {String} serverPublicKey
     * @param  {String} signature
-    * @return {JSON}
+    * @return {Object}
     */
-   registerAccount: (walletId, ethAddress, fcmIID, serverPublicKey, signature) => {
+   registerAccount: (walletId, walletAddress, fcmIID, serverPublicKey, signature) => {
 
         const data = { 
             walletId:           walletId,
-            ethAddress:         ethAddress,
+            ethAddress:         walletAddress,
             fcmIID:             fcmIID,
             requesterPublicKey: serverPublicKey,
             signature:          signature
@@ -27,17 +27,17 @@ module.exports = {
 
     /** 
     * Unregister a wallet 
-    *
+    * @method unregisterAccount
     * @param  {String} walletId
     * @param  {String} ethAddress
     * @param  {String} signature
-    * @return {JSON}
+    * @return {Object}
     */
-   unregisterAccount: (walletId, ethAddress, signature) => {
+   unregisterAccount: (walletId, walletAddress, signature) => {
 
     const data = { 
         walletId:           walletId,
-        ethAddress:         ethAddress,
+        ethAddress:         walletAddress,
         signature:          signature
 
     };
@@ -45,10 +45,10 @@ module.exports = {
 },
     /** 
     * Update the FCMIID
-    *
+    * @method updateFMCIID
     * @param  {String} walletId
     * @param  {String} fcmIID
-    * @return {JSON}
+    * @return {Object}
     */
     updateFMCIID: (walletId, fcmIID) => {
         
@@ -60,16 +60,16 @@ module.exports = {
       },
      /** 
      * Get balance from BCX
-     *
-     * @param  {String} address
+     * @method getBalance
+     * @param  {String} walletAddress
      * @param  {String} asset
      * @param  {String} contract
-     * @return {JSON}
+     * @return {Object}
      */
-    getBalance: (address, asset, requesterPublicKey = undefined) => {
+    getBalance: (walletAddress, asset, requesterPublicKey = undefined) => {
         
         const data = {
-          address:         address,
+          address:         walletAddress,
           asset:           asset,
           contractAddress: requesterPublicKey
         };
@@ -78,18 +78,18 @@ module.exports = {
 
     /** 
     * Get transaction history from BCX
-    *
+    * @method txHistory
     * @param  {String} address1
     * @param  {String} address2
     * @param  {String} asset
     * @param  {String} timestamp
-    * @return {JSON}
+    * @return {Object}
     */
-    txHistory: (address1, address2 = undefined, asset = undefined, timestamp = undefined) => {
+    txHistory: (walletAddress1, walletAddress2 = undefined, asset = undefined, timestamp = undefined) => {
         
         const data = {
-          address1:   address1,
-          address1:   address2,
+          address1:   walletAddress1,
+          address1:   walletAddress2,
           asset:      asset,
           fromtmstmp: timestamp
         };
