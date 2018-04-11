@@ -12,7 +12,7 @@ $ npm install bcx-api
 
 ```js
 //var bcx = require('bcx-api')
-var sdk = require('./index.js')
+var bcx = require('./index.js')
 ```
 
 #### Account and FCMIID
@@ -23,17 +23,17 @@ var sdk = require('./index.js')
 var secp256k1 = require("secp256k1");
 var sha3 = require("ethereumjs-util");
 
-const parameters = 
-      {
-        walletId: 1234,
-        ethAddress: "0xabA31e585c4a221d9e196EA46c98793e0A0490bD",
-        fcmIID: "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV",
-        requesterPublicKey: "0x5eDa0D39f19C28731a64491eD48dF5EDB0945169"
-      }
+const walletId = 1234;
+const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
+const fcmIID = "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV";
+const requesterPublicKey = "0x5eDa0D39f19C28731a64491eD48dF5EDB0945169";
 
-    const digest = sha3(JSON.stringify(parameters));
-    const signature = secp256k1.sign(digest, new Buffer(privateKey, "hex"));
-    bcx.registerAccount(walletID, ethAddress, fcmIID, requesterPublicKey, signature)
+const payload = bcx.createPayload(walletId, walletAddress, fcmIID, requesterPublicKey)
+    
+const digest = sha3(JSON.stringify(parameters));
+const signature = secp256k1.sign(digest, new Buffer(privateKey, "hex"));
+    
+bcx.registerAccount(payload, signature)
 ```
 <details><summary>Response</summary><p>
 
@@ -41,14 +41,28 @@ const parameters =
 
 </p></details>
 
+###### Remove an account
+```js
+var secp256k1 = require("secp256k1");
+var sha3 = require("ethereumjs-util");
+
+const walletId = 1234;
+const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
+const payload = bcx.createPayload(walletId, walletAddress)
+    
+const digest = sha3(JSON.stringify(parameters));
+const signature = secp256k1.sign(digest, new Buffer(privateKey, "hex"));
+    
+bcx.unregisterAccount(payload, signature)
+```
 ###### FCMIID Uptade
 
 ```js
-  walletId = 1234;
-  publicAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
-  newFCMIID =  "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV";
+const walletId = 1234;
+const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
+const newFCMIID =  "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV";
 
-  bcx.updateFCMIID(walletID, publicAddress, newFMCIID);
+bcx.updateFCMIID(walletID, walletAddress, newFMCIID);
 ```
 
 <details><p><summary>Response</summary>
@@ -62,9 +76,9 @@ const parameters =
 ###### Balance
 
 ```js
-accountAddress = "0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895";
-asset = "ETH";
-balance = sdk.getBalance(accountAddress, asset)
+const walletAddress = "0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895";
+const asset = "ETH";
+const balance = bcx.getBalance(walletAddress, asset)
 ```
 <details><summary>Response</summary><p>
 
@@ -79,10 +93,10 @@ balance = sdk.getBalance(accountAddress, asset)
 
 ###### Transaction History
 ```js
-accountAddress = "0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895";
-asset = "ETH";
+const walletAddress = "0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895";
+const asset = "ETH";
 // txHistory(toAddress: string, fromAddress : string, asset: string, fromTimestamp: number)
-history = sdk.txHistory(accountAddress, "ALL", "ALL", 0)
+history = bcx.txHistory(walletAddress, "ALL", "ALL", 0)
 ```
 
 <details><summary>Response</summary><p>

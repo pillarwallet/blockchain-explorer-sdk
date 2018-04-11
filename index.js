@@ -5,42 +5,28 @@ module.exports = {
     /** 
     * Register a new wallet on BCX
     * @method registerAccount
-    * @param  {String} walletId
-    * @param  {String} walletAddress
-    * @param  {String} fcmIID
-    * @param  {String} serverPublicKey
+    * @param  {Object} payload
     * @param  {String} signature
-    * @return {Object}
+    * @return {String}
     */
-   registerAccount: (walletId, walletAddress, fcmIID, serverPublicKey, signature) => {
+   registerAccount: (payload, signature) => {
 
-        const data = { 
-            walletId:           walletId,
-            ethAddress:         walletAddress,
-            fcmIID:             fcmIID,
-            requesterPublicKey: serverPublicKey,
-            signature:          signature
+        data = {...payload, signature: signature};
 
-        };
         return bcxApi.postRequest(bcxApi.BCXREGISTER_URL, data)
   },
 
     /** 
     * Unregister a wallet 
     * @method unregisterAccount
-    * @param  {String} walletId
-    * @param  {String} ethAddress
+    * @param  {Object} payload
     * @param  {String} signature
-    * @return {Object}
+    * @return {String}
     */
-   unregisterAccount: (walletId, walletAddress, signature) => {
+   unregisterAccount: (payload, signature) => {
 
-    const data = { 
-        walletId:           walletId,
-        ethAddress:         walletAddress,
-        signature:          signature
+    data = {...payload, signature: signature};
 
-    };
     return bcxApi.postRequest(bcxApi.BCXUNREGISTER_URL, data)
 },
     /** 
@@ -96,4 +82,16 @@ module.exports = {
         Object.keys(data).forEach((key) => (body[key] == "ALL") && delete body[key]);
         return bcxApi.postRequest(bcxApi.BCXHISTORY_URL, data)
       }
+
+      createPayload: (walletId, walletAddress, fcmIID = undefined, serverPublicKey = undefined) => {
+        
+        const data = { 
+            walletId:           walletId,
+            ethAddress:         walletAddress,
+            fcmIID:             fcmIID,
+            requesterPublicKey: serverPublicKey,
+            signature:          signature
+        };
+        Object.keys(data).forEach((key) => (body[key] == undefined) && delete body[key]);
+        return data
   };
