@@ -59,7 +59,7 @@ module.exports = {
           asset:           asset,
           contractAddress: requesterPublicKey
         };
-        return bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data)
+        return bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data);
       },
 
     /** 
@@ -81,7 +81,7 @@ module.exports = {
         };
         Object.keys(data).forEach((key) => (body[key] == "ALL") && delete body[key]);
         return bcxApi.postRequest(bcxApi.BCXHISTORY_URL, data)
-      }
+      },
 
       createPayload: (walletId, walletAddress, fcmIID = undefined, serverPublicKey = undefined) => {
         
@@ -90,8 +90,8 @@ module.exports = {
             ethAddress:         walletAddress,
             fcmIID:             fcmIID,
             requesterPublicKey: serverPublicKey,
-            signature:          signature
         };
         Object.keys(data).forEach((key) => (body[key] == undefined) && delete body[key]);
         return data
+      }
   };

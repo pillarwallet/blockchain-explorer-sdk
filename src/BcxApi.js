@@ -3,9 +3,9 @@ var fetch = require("node-fetch");
 this.SERVER_URL = "https://bcx-dev.pillarproject.io";
 this.BCXREGISTER_URL =    this.SERVER_URL + "/wallet-backend/register-new-wallet";
 this.BCXUNREGISTER_URL =  this.SERVER_URL + "/wallet-backend/unregister-wallet";
-this.BCXFCMIID_URL =      this.SERVER_URL + "/updatefcmiid";
-this.BCXHISTORY_URL =     this.SERVER_URL + "/txhistory";
-this.BCXBALANCE_URL =     this.SERVER_URL + "/balance";
+this.BCXFCMIID_URL =      this.SERVER_URL + "/updatefcmiid"; // /wallet-backend/updatefcmiid
+this.BCXHISTORY_URL =     this.SERVER_URL + "/txhistory"; // /wallet-client/txhistory GET
+this.BCXBALANCE_URL =     this.SERVER_URL + "/balance"; // /wallet-client/balance GET
 
 /** 
     * Https POST request
@@ -13,8 +13,8 @@ this.BCXBALANCE_URL =     this.SERVER_URL + "/balance";
     * @param  {String} url
     * @param  {Object} body
     */
-exports.postRequest = (url, body) => {
-        return fetchRequests(url, body, 'POST')   
+exports.postRequest = async (url, body) => {
+        return  fetchRequests(url, body, 'POST'); 
     }
 /** 
     * Https GET request
@@ -59,8 +59,8 @@ let  fetchRequests = async (url, body, type) => {
         body:    JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' }
         };
-
-    const response = await fetch(url, postBody)
-    return await response.json()
-
+ 
+    var content = await (await fetch(url, postBody)).text();
+    console.log(JSON.parse(content));
+    return await content;
 }
