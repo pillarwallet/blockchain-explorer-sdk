@@ -20,20 +20,13 @@ var bcx = require('./index.js')
 ###### Registration
 
 ```js
-var secp256k1 = require("secp256k1");
-var sha3 = require("ethereumjs-util");
 
 const walletId = 1234;
 const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
 const fcmIID = "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV";
 const requesterPublicKey = "0x5eDa0D39f19C28731a64491eD48dF5EDB0945169";
-
-const payload = bcx.createPayload(walletId, walletAddress, fcmIID, requesterPublicKey)
-    
-const digest = sha3(JSON.stringify(parameters));
-const signature = secp256k1.sign(digest, new Buffer(privateKey, "hex"));
-    
-bcx.registerAccount(payload, signature)
+   
+bcx.registerAccount(walletId, walletAddress, fcmIID, requesterPublicKey, privateKey)
 ```
 <details><summary>Response</summary><p>
 
@@ -43,17 +36,11 @@ bcx.registerAccount(payload, signature)
 
 ###### Remove an account
 ```js
-var secp256k1 = require("secp256k1");
-var sha3 = require("ethereumjs-util");
 
 const walletId = 1234;
 const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
-const payload = bcx.createPayload(walletId, walletAddress)
-    
-const digest = sha3(JSON.stringify(parameters));
-const signature = secp256k1.sign(digest, new Buffer(privateKey, "hex"));
-    
-bcx.unregisterAccount(payload, signature)
+
+bcx.unregisterAccount(walletId, walletAddress, privateKey)
 ```
 ###### FCMIID Uptade
 
