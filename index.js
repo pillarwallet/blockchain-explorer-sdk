@@ -5,29 +5,35 @@ module.exports = {
     /** 
     * Register a new wallet on BCX
     * @method registerAccount
-    * @param  {Object} payload
-    * @param  {String} signature
+    * @param  {String}   
+    * @param  {String}
+    * @param  {String} 
+    * @param  {String} 
+    * @param  {String} 
     * @return {String}
     */
-   registerAccount: (payload, signature) => {
-
-        data = {...payload, signature: signature};
-
-        return bcxApi.postRequest(bcxApi.BCXREGISTER_URL, data)
+   registerAccount: (walletId, walletAddress, fcmIID, serverPublicKey, privateKey) => {
+      
+      let payload = bcxApi.createPayload(walletId, walletAddress, fcmIID, serverPublicKey);  
+      let data =  {...payload, signature:bcxApi.sign(payload,privateKey)};
+      
+      return bcxApi.postRequest(bcxApi.BCXREGISTER_URL, data)
   },
 
     /** 
     * Unregister a wallet 
     * @method unregisterAccount
-    * @param  {Object} payload
-    * @param  {String} signature
+    * @param  {String}
+    * @param  {String} 
+    * @param  {String} 
     * @return {String}
     */
-   unregisterAccount: (payload, signature) => {
+   unregisterAccount: (walletId, walletAddress, privateKey) => {
 
-    data = {...payload, signature: signature};
+      let payload = bcxApi.createPayload(walletId, walletAddress);  
+      let data =  {...payload, signature:bcxApi.sign(payload,privateKey)};
 
-    return bcxApi.postRequest(bcxApi.BCXUNREGISTER_URL, data)
+      return bcxApi.postRequest(bcxApi.BCXUNREGISTER_URL, data)
 },
     /** 
     * Update the FCMIID
@@ -39,9 +45,10 @@ module.exports = {
     updateFMCIID: (walletId, fcmIID) => {
         
         const data = {
-            walletId:           walletId,
+            walletID:           walletId,
             fcmIID:             fcmIID
         };
+        
         return bcxApi.postRequest(bcxApi.BCXFCMIID_URL, data)
       },
      /** 
@@ -59,6 +66,7 @@ module.exports = {
           asset:           asset,
           contractAddress: requesterPublicKey
         };
+        
         return bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data);
       },
 
@@ -80,18 +88,7 @@ module.exports = {
           fromtmstmp: timestamp
         };
         Object.keys(data).forEach((key) => (body[key] == "ALL") && delete body[key]);
-        return bcxApi.postRequest(bcxApi.BCXHISTORY_URL, data)
-      },
-
-      createPayload: (walletId, walletAddress, fcmIID = undefined, serverPublicKey = undefined) => {
         
-        const data = { 
-            walletId:           walletId,
-            ethAddress:         walletAddress,
-            fcmIID:             fcmIID,
-            requesterPublicKey: serverPublicKey,
-        };
-        Object.keys(data).forEach((key) => (body[key] == undefined) && delete body[key]);
-        return data
+        return bcxApi.postRequest(bcxApi.BCXHISTORY_URL, data)
       }
   };

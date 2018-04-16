@@ -1,4 +1,7 @@
 var fetch = require("node-fetch");
+var axios = require("axios");
+var ethUtil = require("ethereumjs-util")
+var request = require("request-promise-native")
 
 this.SERVER_URL = "https://bcx-dev.pillarproject.io";
 this.BCXREGISTER_URL =    this.SERVER_URL + "/wallet-backend/register-new-wallet";
@@ -14,7 +17,16 @@ this.BCXBALANCE_URL =     this.SERVER_URL + "/balance"; // /wallet-client/balanc
     * @param  {Object} body
     */
 exports.postRequest = async (url, body) => {
-        return  fetchRequests(url, body, 'POST'); 
+    var postResponse;
+    fetchRequests(url, body, 'POST')
+    .then(data =>{
+        //console.log(data)
+        postResponse = data;
+    })
+    .catch(error =>{
+        //console.log(error)
+    })
+    return await postResponse
     }
 /** 
     * Https GET request
@@ -44,7 +56,27 @@ exports.deleteRequest = (url, body) => {
          return fetchRequests(url, body, 'DELETE');
     }
 
-/** 
+exports.createPayload = (walletId, walletAddress, fcmIID = undefined, serverPublicKey = undefined) => {
+
+    const data = { 
+            walletId:           walletId,
+            ethAddress:         walletAddress,
+            fcmIID:             fcmIID,
+            requesterPublicKey: serverPublicKey,
+        };
+
+        Object.keys(data).forEach((key) => (data[key] == undefined) && delete data[key]);
+        return data
+    }
+
+exports.sign = (payload, privateKey) => {
+        digest = ethUtil.sha3(JSON.stringify(payload));
+        signature =  ethUtil.secp256k1.sign(digest, privateKey);
+        return  signature.signature.toString('hex')
+    }
+
+
+    /** 
     * Fetch https requests
     * @method fetchRequests
     * @param  {String} url
@@ -60,7 +92,31 @@ let  fetchRequests = async (url, body, type) => {
         headers: { 'Content-Type': 'application/json' }
         };
  
-    var content = await (await fetch(url, postBody)).text();
-    console.log(JSON.parse(content));
-    return await content;
+    var content = await (await fetch(url, postBody)).json();
+
+    console.log(content.message)
+    return content;
+}
+
+let fetchRequestsAxios = (url, body, type) => {
+    config = {
+        headers: { 'Content-Type': 'application/json' }
+    };
+    const request = axios.post(url, body, config)
+    .then(response => {
+        return response.data;
+    })
+    .catch(error => error)
+
+    return request
+};
+
+let fetchRequestsReq = (url, body, type) => {
+    const options = {
+        url: url,
+        method: type,
+        body: body,
+        json: true,
+      };
+      return request(options);
 }
