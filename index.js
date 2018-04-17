@@ -1,5 +1,5 @@
 var bcxApi = require("./providers/BcxApi.js");
-var crypto = require('./Crypto.js')
+var crypto = require('./providers/Crypto.js')
 
 
 module.exports = {
