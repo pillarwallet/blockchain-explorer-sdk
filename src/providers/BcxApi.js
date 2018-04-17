@@ -1,6 +1,5 @@
 var fetch = require("node-fetch");
 var axios = require("axios");
-var ethUtil = require("ethereumjs-util")
 var request = require("request-promise-native")
 
 this.SERVER_URL = "https://bcx-dev.pillarproject.io";
