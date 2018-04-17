@@ -69,13 +69,6 @@ exports.createPayload = (walletId, walletAddress, fcmIID = undefined, serverPubl
         return data
     }
 
-exports.sign = (payload, privateKey) => {
-        digest = ethUtil.sha3(JSON.stringify(payload));
-        signature =  ethUtil.secp256k1.sign(digest, privateKey);
-        return  signature.signature.toString('hex')
-    }
-
-
     /** 
     * Fetch https requests
     * @method fetchRequests

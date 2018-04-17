@@ -1,4 +1,6 @@
-var bcxApi = require("./src/BcxApi.js");
+var bcxApi = require("./providers/BcxApi.js");
+var crypto = require('./Crypto.js')
+
 
 module.exports = {
 
@@ -15,7 +17,7 @@ module.exports = {
    registerAccount: (walletId, walletAddress, fcmIID, serverPublicKey, privateKey) => {
       
       let payload = bcxApi.createPayload(walletId, walletAddress, fcmIID, serverPublicKey);  
-      let data =  {...payload, signature:bcxApi.sign(payload,privateKey)};
+      let data =  {...payload, signature:crypto.sign(payload,privateKey,'sha3')};
       
       return bcxApi.postRequest(bcxApi.BCXREGISTER_URL, data)
   },
@@ -31,7 +33,7 @@ module.exports = {
    unregisterAccount: (walletId, walletAddress, privateKey) => {
 
       let payload = bcxApi.createPayload(walletId, walletAddress);  
-      let data =  {...payload, signature:bcxApi.sign(payload,privateKey)};
+      let data =  {...payload, signature:crypto.sign(payload,privateKey,'sha3')};
 
       return bcxApi.postRequest(bcxApi.BCXUNREGISTER_URL, data)
 },
@@ -67,7 +69,11 @@ module.exports = {
           contractAddress: requesterPublicKey
         };
         
-        return bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data);
+        return bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data)
+        .then(response => {
+          callback(response)
+        })
+        .catch(error => error)
       },
 
     /** 
