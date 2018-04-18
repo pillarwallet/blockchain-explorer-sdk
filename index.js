@@ -1,5 +1,5 @@
 var bcxApi = require("./src/providers/BcxApi.js");
-var crypto = require('./src/providers/Crypto.js')
+var crypto = require('../pillar-authentication-sdk');
 
 
 module.exports = {
