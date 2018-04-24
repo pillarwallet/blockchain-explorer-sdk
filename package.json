@@ -1,8 +1,8 @@
 {
-  "name": "blockchain-explorer-sdk",
+  "name": "@pillarwallet/blockchain-explorer-sdk",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest"
   },
@@ -16,11 +16,8 @@
   },
   "homepage": "https://github.com/pillarwallet/blockchain-explorer-sdk#readme",
   "dependencies": {
+    "@pillarwallet/plr-auth-sdk": "^0.1.0",
     "axios": "^0.18.0",
-    "elliptic": "^6.4.0",
-    "ethereumjs-util": "^5.1.5",
-    "js-sha3": "^0.7.0",
-    "jshashes": "^1.0.7",
     "node-fetch": "^2.1.2",
     "request-promise-native": "^1.0.5",
     "sinon": "^4.5.0"
