@@ -6,12 +6,12 @@ Pillar blockchain explorer SDK for [node](http://nodejs.org).
 ## Install
 
 ```bash
-$ npm install bcx-api
+$ npm install @pillarwallet/bcx-api
 ```
 ## Usage
 
 ```js
-//var bcx = require('bcx-api')
+//var bcx = require('@pillarwallet/bcx-api')
 var bcx = require('./index.js')
 ```
 
