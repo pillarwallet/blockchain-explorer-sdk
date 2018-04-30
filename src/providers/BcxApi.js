@@ -2,13 +2,6 @@ var fetch = require("node-fetch");
 var axios = require("axios");
 var request = require("request-promise-native")
 
-this.SERVER_URL = "https://bcx-dev.pillarproject.io";
-this.BCXREGISTER_URL =    this.SERVER_URL + "/wallet-backend/register-new-wallet";
-this.BCXUNREGISTER_URL =  this.SERVER_URL + "/wallet-backend/unregister-wallet";
-this.BCXFCMIID_URL =      this.SERVER_URL + "/updatefcmiid"; // /wallet-backend/updatefcmiid
-this.BCXHISTORY_URL =     this.SERVER_URL + "/txhistory"; // /wallet-client/txhistory GET
-this.BCXBALANCE_URL =     this.SERVER_URL + "/balance"; // /wallet-client/balance GET
-
 /** 
     * Https POST request
     * @method registerAccount
@@ -19,13 +12,12 @@ exports.postRequest = async (url, body) => {
     var postResponse;
     fetchRequests(url, body, 'POST')
     .then(data =>{
-        //console.log(data)
-        postResponse = data;
+        console.log(data.message)
     })
     .catch(error =>{
-        //console.log(error)
+        console.log(error)
     })
-    return await postResponse
+    return postResponse
     }
 /** 
     * Https GET request
@@ -85,8 +77,6 @@ let  fetchRequests = async (url, body, type) => {
         };
  
     var content = await (await fetch(url, postBody)).json();
-
-    console.log(content.message)
     return content;
 }
 

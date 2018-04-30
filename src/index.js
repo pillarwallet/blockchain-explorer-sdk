@@ -1,9 +1,10 @@
-var bcxApi = require("./src/providers/BcxApi.js");
+var bcxApi = require("./providers/BcxApi.js");
+const bcxEndpoints = require("./constants/BcxEndpoints.js")
 var plrAuth = require('@pillarwallet/plr-auth-sdk');
+const signatureType = require('./constants/SignatureType.js').defaultSignatureType;
 
 
 module.exports = {
-
     /** 
     * Register a new wallet on BCX
     * @method registerAccount
@@ -17,10 +18,10 @@ module.exports = {
    registerAccount: (walletId, walletAddress, fcmIID, serverPublicKey, privateKey) => {
       
       let payload = bcxApi.createPayload(walletId, walletAddress, fcmIID, serverPublicKey);  
-      let data = {...payload, signature: plrAuth.sign(payload,privateKey,'KECCAK256')
+      let data = {...payload, signature: plrAuth.sign(payload,privateKey,signatureType)
     };
       
-      return bcxApi.postRequest(bcxApi.BCXREGISTER_URL, data)
+      return bcxApi.postRequest(bcxEndpoints.BCXREGISTER_URL, data)
   },
 
     /** 
@@ -34,11 +35,11 @@ module.exports = {
    unregisterAccount: (walletId, walletAddress, privateKey) => {
 
       let payload = bcxApi.createPayload(walletId, walletAddress);  
-      let data = {...payload, signature: plrAuth.sign(payload,privateKey,'KECCAK256')
+      let data = {...payload, signature: plrAuth.sign(payload,privateKey,signatureType)
 
     };
 
-      return bcxApi.postRequest(bcxApi.BCXUNREGISTER_URL, data)
+      return bcxApi.postRequest(bcxEndpoints.BCXUNREGISTER_URL, data)
 },
     /** 
     * Update the FCMIID
@@ -55,7 +56,7 @@ module.exports = {
             FCMIID:             fcmIID
         };
         
-        return bcxApi.postRequest(bcxApi.BCXFCMIID_URL, data)
+        return bcxApi.postRequest(bcxEndpoints.BCXFCMIID_URL, data)
       },
      /** 
      * Get balance from BCX
@@ -73,7 +74,7 @@ module.exports = {
           contractAddress: requesterPublicKey
         };
         
-        return bcxApi.postRequest(bcxApi.BCXBALANCE_URL, data)
+        return bcxApi.postRequest(bcxEndpoints.BCXBALANCE_URL, data)
         .then(response => {
           callback(response)
         })
@@ -99,6 +100,6 @@ module.exports = {
         };
         Object.keys(data).forEach((key) => (body[key] == "ALL") && delete body[key]);
         
-        return bcxApi.postRequest(bcxApi.BCXHISTORY_URL, data)
+        return bcxApi.postRequest(bcxEndpoints.BCXHISTORY_URL, data)
       }
   };
