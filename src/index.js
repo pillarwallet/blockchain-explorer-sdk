@@ -1,8 +1,12 @@
-var bcxApi = require("./providers/BcxApi.js");
-const bcxEndpoints = require("./constants/BcxEndpoints.js")
+var requestProvider = require("./providers/RequestProvider.js")
+var requesterUtils = require("./util/RequestUtils.js")
 var plrAuth = require('@pillarwallet/plr-auth-sdk');
-const signatureType = require('./constants/SignatureType.js').defaultSignatureType;
 
+process.env.NODE_ENV = 'development';
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
 
 module.exports = {
     /** 
@@ -16,12 +20,18 @@ module.exports = {
     * @return {String}
     */
    registerAccount: (walletId, walletAddress, fcmIID, serverPublicKey, privateKey) => {
-      
-      let payload = bcxApi.createPayload(walletId, walletAddress, fcmIID, serverPublicKey);  
-      let data = {...payload, signature: plrAuth.sign(payload,privateKey,signatureType)
+    
+      let payload  = { 
+        walletId:           walletId,
+        ethAddress:         walletAddress,
+        fcmIID:             fcmIID,
+        requesterPublicKey: serverPublicKey,
     };
       
-      return bcxApi.postRequest(bcxEndpoints.BCXREGISTER_URL, data)
+    let data = {...payload, signature: plrAuth.sign(payload,privateKey)
+    };
+      
+      return requestProvider.postRequest(process.env.BCX_REGISTER_ACC, data)
   },
 
     /** 
@@ -33,13 +43,17 @@ module.exports = {
     * @return {String}
     */
    unregisterAccount: (walletId, walletAddress, privateKey) => {
+        
+      const payload = { 
+          walletId:           walletId,
+          ethAddress:         walletAddress,
+        };
 
-      let payload = bcxApi.createPayload(walletId, walletAddress);  
-      let data = {...payload, signature: plrAuth.sign(payload,privateKey,signatureType)
+      let data = {...payload, signature: plrAuth.sign(payload,privateKey)
 
     };
 
-      return bcxApi.postRequest(bcxEndpoints.BCXUNREGISTER_URL, data)
+      return requestProvider.postRequest(process.env.BCX_UNREGISTER_ACC, data)
 },
     /** 
     * Update the FCMIID
@@ -56,7 +70,7 @@ module.exports = {
             FCMIID:             fcmIID
         };
         
-        return bcxApi.postRequest(bcxEndpoints.BCXFCMIID_URL, data)
+        return requestProvider.postRequest(process.env.BCX_UPDATE_FMCIID, data)
       },
      /** 
      * Get balance from BCX
@@ -74,7 +88,7 @@ module.exports = {
           contractAddress: requesterPublicKey
         };
         
-        return bcxApi.postRequest(bcxEndpoints.BCXBALANCE_URL, data)
+        return requestProvider.postRequest(process.env.BCX_GET_BALANCE, data)
         .then(response => {
           callback(response)
         })
@@ -100,6 +114,6 @@ module.exports = {
         };
         Object.keys(data).forEach((key) => (body[key] == "ALL") && delete body[key]);
         
-        return bcxApi.postRequest(bcxEndpoints.BCXHISTORY_URL, data)
+        return requestProvider.postRequest(process.env.BCX_GET_TXHISTORY, data)
       }
   };

@@ -19,9 +19,13 @@
     "@pillarwallet/plr-auth-sdk": "^0.1.0",
     "assert": "^1.4.1",
     "axios": "^0.18.0",
+    "chai": "^4.1.2",
+    "dotenv": "^5.0.1",
     "node-fetch": "^2.1.2",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
     "request-promise-native": "^1.0.5",
-    "sinon": "^4.5.0"
+    "sinon": "^5.0.1"
   },
   "devDependencies": {
     "jest": "^22.4.3"
