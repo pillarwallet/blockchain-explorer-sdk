@@ -1,18 +1,5 @@
 var request = require("request-promise")
 
-exports.createPayload = (walletId, walletAddress, fcmIID = undefined, serverPublicKey = undefined) => {
-
-    const data = { 
-            walletId:           walletId,
-            ethAddress:         walletAddress,
-            fcmIID:             fcmIID,
-            requesterPublicKey: serverPublicKey,
-        };
-
-        Object.keys(data).forEach((key) => (data[key] == undefined) && delete data[key]);
-        return data
-    }
-
     /** 
     * Fetch https requests
     * @method fetchRequests

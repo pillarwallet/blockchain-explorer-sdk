@@ -46,7 +46,7 @@ module.exports = {
         
       const payload = { 
           walletId:           walletId,
-          ethAddress:         walletAddress,
+          requesterPublicKey: walletAddress,
         };
 
       let data = {...payload, signature: plrAuth.sign(payload,privateKey)
@@ -62,15 +62,16 @@ module.exports = {
     * @param  {String} fcmIID
     * @return {Object}
     */
-    updateFMCIID: (walletId, walletAddress, fcmIID) => {
-        
-        const data = {
+    updateFMCIID: (walletId, requesterPublicKey, fcmIID, privateKey) => {
+
+        const payload = {
             walletId:           walletId,
-            pubAddress:         walletAddress,
+            requesterPublicKey: requesterPublicKey,
             FCMIID:             fcmIID
         };
-        
-        return requestProvider.postRequest(process.env.BCX_UPDATE_FMCIID, data)
+        let data = {...payload, signature: plrAuth.sign(payload,privateKey)};
+
+        return requestProvider.postRequest(process.env.BCX_UPDATE_FCMIID, data)
       },
      /** 
      * Get balance from BCX
@@ -89,10 +90,6 @@ module.exports = {
         };
         
         return requestProvider.postRequest(process.env.BCX_GET_BALANCE, data)
-        .then(response => {
-          callback(response)
-        })
-        .catch(error => error)
       },
 
     /** 
