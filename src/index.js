@@ -1,5 +1,5 @@
-var requestProvider = require("./providers/RequestProvider.js")
-var requesterUtils = require("./util/RequestUtils.js")
+var requestProvider = require("./providers/RequestProvider")
+var requesterUtil = require("./util/RequestUtil")
 var plrAuth = require('@pillarwallet/plr-auth-sdk');
 
 process.env.NODE_ENV = 'development';
@@ -12,11 +12,11 @@ module.exports = {
     /** 
     * Register a new wallet on BCX
     * @method registerAccount
-    * @param  {String}   
-    * @param  {String}
-    * @param  {String} 
-    * @param  {String} 
-    * @param  {String} 
+    * @param  {String} walletId
+    * @param  {String} walletAddress
+    * @param  {String} fcmIID
+    * @param  {String} serverPublicKey
+    * @param  {String} privateKey
     * @return {String}
     */
    registerAccount: (walletId, walletAddress, fcmIID, serverPublicKey, privateKey) => {
@@ -37,9 +37,9 @@ module.exports = {
     /** 
     * Unregister a wallet 
     * @method unregisterAccount
-    * @param  {String}
-    * @param  {String} 
-    * @param  {String} 
+    * @param  {String} walletId
+    * @param  {String} walletAddress
+    * @param  {String} privateKey
     * @return {String}
     */
    unregisterAccount: (walletId, walletAddress, privateKey) => {
@@ -59,7 +59,9 @@ module.exports = {
     * Update the FCMIID
     * @method updateFMCIID
     * @param  {String} walletId
+    * @param  {String} serverPublicKey
     * @param  {String} fcmIID
+    * @param  {String} privateKey
     * @return {Object}
     */
     updateFMCIID: (walletId, requesterPublicKey, fcmIID, privateKey) => {
@@ -89,14 +91,14 @@ module.exports = {
           contractAddress: requesterPublicKey
         };
         
-        return requestProvider.postRequest(process.env.BCX_GET_BALANCE, data)
+        return requestProvider.getRequest(process.env.BCX_GET_BALANCE, data)
       },
 
     /** 
     * Get transaction history from BCX
     * @method txHistory
-    * @param  {String} address1
-    * @param  {String} address2
+    * @param  {String} walletAddress1
+    * @param  {String} walletAddress2
     * @param  {String} asset
     * @param  {String} timestamp
     * @return {Object}
@@ -109,8 +111,8 @@ module.exports = {
           asset:      asset,
           fromtmstmp: timestamp
         };
-        Object.keys(data).forEach((key) => (body[key] == "ALL") && delete body[key]);
+        Object.keys(data).forEach((key) => (data[key] == "ALL") && delete data[key]);
         
-        return requestProvider.postRequest(process.env.BCX_GET_TXHISTORY, data)
+        return requestProvider.getRequest(process.env.BCX_GET_TXHISTORY, data)
       }
   };

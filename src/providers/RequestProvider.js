@@ -1,5 +1,4 @@
-var requesterUtils = require("../util/RequestUtils.js")
-var dotEnv = require("dotenv");
+var requesterUtil = require("../util/RequestUtil")
 
 module.exports = {
 
@@ -10,7 +9,7 @@ module.exports = {
     * @param  {Object} body
     */
     postRequest: (url, body) => {
-        return requesterUtils.fetchRequests(process.env.BCX_SERVER_URL + url, body, 'POST', undefined)
+        return requesterUtil.fetchRequests(process.env.BCX_SERVER_URL + url, body, 'POST', undefined)
     },
 /** 
     * Https GET request
@@ -19,7 +18,7 @@ module.exports = {
     * @param  {Object} body
     */
     getRequest: (url, body) => {
-        return requesterUtils.fetchRequests(process.env.BCX_SERVER_URL + url, undefined, 'GET', body);
+        return requesterUtil.fetchRequests(process.env.BCX_SERVER_URL + url, undefined, 'GET', body);
     },
 /** 
     * Https PUT request
@@ -28,7 +27,7 @@ module.exports = {
     * @param  {Object} body
     */
     putRequest: (url, body) => {
-        return requesterUtils.fetchRequests(process.env.BCX_SERVER_URL + url, body, 'PUT', undefined);
+        return requesterUtil.fetchRequests(process.env.BCX_SERVER_URL + url, body, 'PUT', undefined);
     },
 /** 
     * Https DELETE request
@@ -37,6 +36,6 @@ module.exports = {
     * @param  {Object} body
     */
     deleteRequest: (url, body) => {
-        return requesterUtils.fetchRequests(process.env.BCX_SERVER_URL + url, body, 'DELETE', undefined);
+        return requesterUtil.fetchRequests(process.env.BCX_SERVER_URL + url, body, 'DELETE', undefined);
     }
 }
