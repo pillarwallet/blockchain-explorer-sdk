@@ -22,7 +22,9 @@
     "sinon": "^4.5.0"
   },
   "devDependencies": {
-    "jest": "^22.4.3"
+    "jest": "^22.4.3",
+    "jest-html-reporter": "2.0.0",
+    "es6-plato": "latest"
   },
   "jest": {
     "roots": [
