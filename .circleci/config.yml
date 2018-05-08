@@ -86,4 +86,4 @@ workflows:
             - test
           filters:
             branches:
-              only: feature/test
+              only: master
