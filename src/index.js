@@ -40,7 +40,7 @@ module.exports = {
     * @param  {String} walletId
     * @param  {String} walletAddress
     * @param  {String} privateKey
-    * @return {String}
+    * @return {Promise}
     */
    unregisterAccount: (walletId, walletAddress, privateKey) => {
         
@@ -62,7 +62,7 @@ module.exports = {
     * @param  {String} serverPublicKey
     * @param  {String} fcmIID
     * @param  {String} privateKey
-    * @return {Object}
+    * @return {Promise}
     */
     updateFMCIID: (walletId, requesterPublicKey, fcmIID, privateKey) => {
 
@@ -80,15 +80,13 @@ module.exports = {
      * @method getBalance
      * @param  {String} walletAddress
      * @param  {String} asset
-     * @param  {String} contract
-     * @return {Object}
+     * @return {Promise}
      */
-    getBalance: (walletAddress, asset, requesterPublicKey = undefined) => {
+    getBalance: (walletAddress, asset) => {
         
         const data = {
           address:         walletAddress,
           asset:           asset,
-          contractAddress: requesterPublicKey
         };
         
         return requestProvider.getRequest(process.env.BCX_GET_BALANCE, data)
@@ -101,18 +99,17 @@ module.exports = {
     * @param  {String} walletAddress2
     * @param  {String} asset
     * @param  {String} timestamp
-    * @return {Object}
+    * @return {Promise}
     */
-    txHistory: (walletAddress1, walletAddress2 = undefined, asset = undefined, timestamp = undefined) => {
+    txHistory: (walletAddress1, walletAddress2, asset, timestamp) => {
         
         const data = {
           address1:   walletAddress1,
-          address1:   walletAddress2,
+          address2:   walletAddress2,
           asset:      asset,
           fromtmstmp: timestamp
         };
-        Object.keys(data).forEach((key) => (data[key] == "ALL") && delete data[key]);
         
-        return requestProvider.getRequest(process.env.BCX_GET_TXHISTORY, data)
+        return requestProvider.getRequest(process.env.BCX_TX_HISTORY, data)
       }
   };
