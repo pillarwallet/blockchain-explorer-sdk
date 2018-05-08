@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/pillarwallet/blockchain-explorer-sdk#readme",
   "dependencies": {
+    "@pillarwallet/plr-auth-sdk": "^0.1.0",
+    "dotenv": "^5.0.1",
     "node-fetch": "^2.1.2",
+    "request-promise": "4.2.2",
     "sinon": "^4.5.0"
   },
   "devDependencies": {
@@ -28,7 +31,8 @@
   },
   "jest": {
     "roots": [
-      "src"
+      "src",
+      "test"
     ],
     "testRegex": "\\.test\\.js$",
     "testResultsProcessor": "./node_modules/jest-html-reporter",

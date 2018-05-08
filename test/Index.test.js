@@ -1,16 +1,16 @@
 var requestProvider = require("../src/providers/RequestProvider");
-var sdk = require("../");
+var sdk = require("../src/index");
 var plrAuth = require('@pillarwallet/plr-auth-sdk');
 require('dotenv').load();
 
 describe('Index Unit Tests', () => {
 
-    it('Expected registerAccount to call requestProvider.postRequest', () => {  
+    it('Expected registerAccount to call requestProvider.postRequest', () => {
 
     requestProvider.postRequest = jest.fn()
     sdk.registerAccount("arg1","arg2","arg3","arg4","arg5")
-    
-    let payload  = { 
+
+    let payload  = {
       walletId:           "arg1",
       ethAddress:         "arg2",
       fcmIID:             "arg3",
@@ -28,7 +28,7 @@ describe('Index Unit Tests', () => {
     requestProvider.postRequest = jest.fn()
     sdk.unregisterAccount("arg1","arg2","arg3")
 
-    let payload  = { 
+    let payload  = {
       walletId:           "arg1",
       requesterPublicKey: "arg2"
     };
@@ -43,21 +43,21 @@ describe('Index Unit Tests', () => {
       requestProvider.getRequest = jest.fn()
       sdk.getBalance("arg1","arg2")
 
-      let payload  = { 
+      let payload  = {
         address:         "arg1",
         asset:           "arg2",
       };
 
       expect(requestProvider.postRequest).toBeCalled();
       expect(requestProvider.getRequest).toBeCalledWith(process.env.BCX_GET_BALANCE, payload);
-  
+
       });
 
       it('Expect getBalance to call requestProvider.getRequest', () => {
 
         requestProvider.getRequest = jest.fn()
         sdk.txHistory("arg1","arg2","arg3","arg4")
-        let payload  = { 
+        let payload  = {
           address1:   "arg1",
           address2:   "arg2",
           asset:      "arg3",
@@ -66,6 +66,6 @@ describe('Index Unit Tests', () => {
 
         expect(requestProvider.postRequest).toBeCalled();
         expect(requestProvider.getRequest).toBeCalledWith(process.env.BCX_TX_HISTORY, payload);
-    
+
         });
   })
