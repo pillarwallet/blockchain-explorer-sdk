@@ -31,7 +31,7 @@ jobs:
   test:
     working_directory: ~/blockchain-explorer-sdk
     docker:
-      - image: circleci/node:4.8.2
+      - image: circleci/node:8.9.4
     steps:
       - checkout
       - run:
@@ -57,7 +57,7 @@ jobs:
   publish:
     working_directory: ~/blockchain-explorer-sdk
     docker:
-      - image: circleci/node:4.8.2
+      - image: circleci/node:8.9.4
     steps:
       - checkout
       - run:
