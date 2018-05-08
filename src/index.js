@@ -1,105 +1,115 @@
-var bcxApi = require("./providers/BcxApi.js");
-const bcxEndpoints = require("./constants/BcxEndpoints.js")
+var requestProvider = require("./providers/RequestProvider")
+var requesterUtil = require("./util/RequestUtil")
 var plrAuth = require('@pillarwallet/plr-auth-sdk');
-const signatureType = require('./constants/SignatureType.js').defaultSignatureType;
 
+process.env.NODE_ENV = 'development';
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
 
 module.exports = {
     /** 
     * Register a new wallet on BCX
     * @method registerAccount
-    * @param  {String}   
-    * @param  {String}
-    * @param  {String} 
-    * @param  {String} 
-    * @param  {String} 
+    * @param  {String} walletId
+    * @param  {String} walletAddress
+    * @param  {String} fcmIID
+    * @param  {String} serverPublicKey
+    * @param  {String} privateKey
     * @return {String}
     */
    registerAccount: (walletId, walletAddress, fcmIID, serverPublicKey, privateKey) => {
-      
-      let payload = bcxApi.createPayload(walletId, walletAddress, fcmIID, serverPublicKey);  
-      let data = {...payload, signature: plrAuth.sign(payload,privateKey,signatureType)
+    
+      let payload  = { 
+        walletId:           walletId,
+        ethAddress:         walletAddress,
+        fcmIID:             fcmIID,
+        requesterPublicKey: serverPublicKey,
     };
       
-      return bcxApi.postRequest(bcxEndpoints.BCXREGISTER_URL, data)
+    let data = {...payload, signature: plrAuth.sign(payload,privateKey)
+    };
+      
+      return requestProvider.postRequest(process.env.BCX_REGISTER_ACC, data)
   },
 
     /** 
     * Unregister a wallet 
     * @method unregisterAccount
-    * @param  {String}
-    * @param  {String} 
-    * @param  {String} 
-    * @return {String}
+    * @param  {String} walletId
+    * @param  {String} walletAddress
+    * @param  {String} privateKey
+    * @return {Promise}
     */
    unregisterAccount: (walletId, walletAddress, privateKey) => {
+        
+      const payload = { 
+          walletId:           walletId,
+          requesterPublicKey: walletAddress,
+        };
 
-      let payload = bcxApi.createPayload(walletId, walletAddress);  
-      let data = {...payload, signature: plrAuth.sign(payload,privateKey,signatureType)
+      let data = {...payload, signature: plrAuth.sign(payload,privateKey)
 
     };
 
-      return bcxApi.postRequest(bcxEndpoints.BCXUNREGISTER_URL, data)
+      return requestProvider.postRequest(process.env.BCX_UNREGISTER_ACC, data)
 },
     /** 
     * Update the FCMIID
     * @method updateFMCIID
     * @param  {String} walletId
+    * @param  {String} serverPublicKey
     * @param  {String} fcmIID
-    * @return {Object}
+    * @param  {String} privateKey
+    * @return {Promise}
     */
-    updateFMCIID: (walletId, walletAddress, fcmIID) => {
-        
-        const data = {
+    updateFMCIID: (walletId, requesterPublicKey, fcmIID, privateKey) => {
+
+        const payload = {
             walletId:           walletId,
-            pubAddress:         walletAddress,
+            requesterPublicKey: requesterPublicKey,
             FCMIID:             fcmIID
         };
-        
-        return bcxApi.postRequest(bcxEndpoints.BCXFCMIID_URL, data)
+        let data = {...payload, signature: plrAuth.sign(payload,privateKey)};
+
+        return requestProvider.postRequest(process.env.BCX_UPDATE_FCMIID, data)
       },
      /** 
      * Get balance from BCX
      * @method getBalance
      * @param  {String} walletAddress
      * @param  {String} asset
-     * @param  {String} contract
-     * @return {Object}
+     * @return {Promise}
      */
-    getBalance: (walletAddress, asset, requesterPublicKey = undefined) => {
+    getBalance: (walletAddress, asset) => {
         
         const data = {
           address:         walletAddress,
           asset:           asset,
-          contractAddress: requesterPublicKey
         };
         
-        return bcxApi.postRequest(bcxEndpoints.BCXBALANCE_URL, data)
-        .then(response => {
-          callback(response)
-        })
-        .catch(error => error)
+        return requestProvider.getRequest(process.env.BCX_GET_BALANCE, data)
       },
 
     /** 
     * Get transaction history from BCX
     * @method txHistory
-    * @param  {String} address1
-    * @param  {String} address2
+    * @param  {String} walletAddress1
+    * @param  {String} walletAddress2
     * @param  {String} asset
     * @param  {String} timestamp
-    * @return {Object}
+    * @return {Promise}
     */
-    txHistory: (walletAddress1, walletAddress2 = undefined, asset = undefined, timestamp = undefined) => {
+    txHistory: (walletAddress1, walletAddress2, asset, timestamp) => {
         
         const data = {
           address1:   walletAddress1,
-          address1:   walletAddress2,
+          address2:   walletAddress2,
           asset:      asset,
           fromtmstmp: timestamp
         };
-        Object.keys(data).forEach((key) => (body[key] == "ALL") && delete body[key]);
         
-        return bcxApi.postRequest(bcxEndpoints.BCXHISTORY_URL, data)
+        return requestProvider.getRequest(process.env.BCX_TX_HISTORY, data)
       }
   };
