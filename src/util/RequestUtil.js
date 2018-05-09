@@ -19,5 +19,4 @@ exports.fetchRequests = (url, body, type, queryParams) => {
             json: true
         }
     return request(options)
-
     }
