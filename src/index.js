@@ -1,10 +1,6 @@
+require('dotenv').config()
 var requestProvider = require("./providers/RequestProvider")
 var requesterUtil = require("./util/RequestUtil")
-
-process.env.NODE_ENV = 'development';
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').load();
-}
 
 module.exports = {
      /** 
