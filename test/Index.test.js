@@ -1,6 +1,6 @@
 var requestProvider = require("../src/providers/RequestProvider");
 var sdk = require("../src");
-require('dotenv').load();
+var endpoints = require("../src/config/constants.js").httpsURL[process.env.NODE_ENV];
 
 describe('Index Unit Tests', () => {
 
@@ -15,7 +15,7 @@ describe('Index Unit Tests', () => {
       sdk.getBalance(payload)
 
       expect(requestProvider.getRequest).toBeCalled();
-      expect(requestProvider.getRequest).toBeCalledWith(process.env.BCX_GET_BALANCE, payload);
+      expect(requestProvider.getRequest).toBeCalledWith(endpoints.BCX_GET_BALANCE, payload);
   
       });
 
@@ -31,7 +31,7 @@ describe('Index Unit Tests', () => {
         sdk.txHistory(payload)
 
         expect(requestProvider.getRequest).toBeCalled();
-        expect(requestProvider.getRequest).toBeCalledWith(process.env.BCX_TX_HISTORY, payload);
+        expect(requestProvider.getRequest).toBeCalledWith(endpoints.BCX_TX_HISTORY, payload);
     
         });
   })
