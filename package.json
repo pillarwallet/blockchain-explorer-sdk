@@ -2,12 +2,12 @@
   "name": "blockchain-explorer-sdk",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
     "plato": "es6-plato -r -d ./reports/plato ./src"
-  },
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pillarwallet/blockchain-explorer-sdk.git"
@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/pillarwallet/blockchain-explorer-sdk#readme",
   "dependencies": {
-    "convict": "^4.2.0",
     "dotenv": "^5.0.1",
     "node-fetch": "^2.1.2",
     "request-promise": "4.2.2",

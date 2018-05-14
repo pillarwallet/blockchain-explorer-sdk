@@ -1,5 +1,0 @@
-{
-    "bcxServerUrl": "",
-    "bcxGetBalance": "/balance",
-    "bcxTxHistory": "/txhistory"
-}
