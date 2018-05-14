@@ -1,141 +1,100 @@
-Blockchain Explorer SDK
-=======================
+###Blockchain Explorer SDK
 
 Pillar blockchain explorer SDK for [node](http://nodejs.org).
 
-## Install
+#### Install
 
 ```bash
 $ npm install @pillarwallet/bcx-api
 ```
-## Usage
+- copy /.sample.env file to /.env with your local development settings
+
+**Development**
+To enable dev mode - add `NODE_ENV=development` to `.env` file
+#### Usage
 
 ```js
-//var bcx = require('@pillarwallet/bcx-api')
-var bcx = require('./index.js')
+var bcx = require('@pillarwallet/bcx-api')
 ```
 
-#### Account and FCMIID
+#### Setup
 
-###### Registration
-
-```js
-
-const walletId = 1234;
-const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
-const fcmIID = "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV";
-const requesterPublicKey = "0x5eDa0D39f19C28731a64491eD48dF5EDB0945169";
-   
-bcx.registerAccount(walletId, walletAddress, fcmIID, requesterPublicKey, privateKey)
-```
-<details><summary>Response</summary><p>
-
-    [200] - NEW ACCOUNT WAS REGISTERED!
-
-</p></details>
-
-###### Remove an account
-```js
-
-const walletId = 1234;
-const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
-
-bcx.unregisterAccount(walletId, walletAddress, privateKey)
-```
-###### FCMIID Uptade
-
-```js
-const walletId = 1234;
-const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
-const newFCMIID =  "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV";
-
-bcx.updateFCMIID(walletID, walletAddress, newFMCIID);
-```
-
-<details><p><summary>Response</summary>
-
-    [200] FCM IID UPDATED FOR ACCOUNT 1234
-
-</p></details>
-
-#### Balance and transaction history
+##### Balance and transaction history
 
 ###### Balance
 
 ```js
-const walletAddress = "0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895";
-const asset = "ETH";
-const balance = bcx.getBalance(walletAddress, asset)
+const query = {
+                address: "0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895",
+                asset = "ETH"
+              }
+
+bcx.getBalance(query).then(response => {
+  console.log(response)
+})
 ```
 <details><summary>Response</summary><p>
 
 ```js
-    { 
-        address: '0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895',
-        asset: 'ETH',
-        balance: '5.999704284' 
-    }
+{
+  result: "success", 
+  balance: {
+            address: "0xabA31e585c4a221d9e196EA46c98793e0A0490bD", 
+            asset: "PLR", 
+            balance: 0
+          }
+}
 ```
 </p></details>
 
 ###### Transaction History
 ```js
-const walletAddress = "0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895";
-const asset = "ETH";
-// txHistory(toAddress: string, fromAddress : string, asset: string, fromTimestamp: number)
-history = bcx.txHistory(walletAddress, "ALL", "ALL", 0)
+const query = {
+                address1 = "0x5eDa0D39f19C28731a64491eD48dF5EDB0945169",
+                asset = "PLR"
+              }
+
+history = bcx.txHistory(query).then(response => {
+  console.log(response)
+})
 ```
 
 <details><summary>Response</summary><p>
 
 ```js
 {
-  [
-  transaction: 
-  {
-    schema: 
-    {
-      hash: '0xfe0083d38169d3d0fa0330558ef917c6e4884e318df8abaa26cec540ee4f49c',
-      nonce: 264,
-      blockHash: '0xe0083d38169d3d0fa0330558ef917c6e4884e318df8abaa26cec540ee4f49c',
-      blockNumber: 2980845,
-      transactionIndex: 134,
-      from: '0xabA31e585c4a221d9e196EA46c98793e0A0490bD',
-      to: '0x5eDa0D39f19C28731a64491eD48dF5EDB0945169',
-      value: '7890000000000000000',
-      gasPrice: '1000000000',
-      gas: '49000000000',
-      input: 'string'
+  result: "success",
+  txHistory: {
+      [
+        {
+          "to": "0x5eDa0D39f19C28731a64491eD48dF5EDB0945169",
+          "from": "0xabA31e585c4a221d9e196EA46c98793e0A0490bD",
+          "asset": "PLR",
+          "contractAddress": "0x583cbbb8a8443b38abcc0c956bece47340ea1367",
+          "timestamp": 12345678910,
+          "value": 7.89,
+          "status": "pending",
+          "hash": "0xfe0083d38169d3d0fa0330558ef917c6e4884e318df8abaa26cec540ee4f49c",
+          "gasUsed": 30234,
+          "nbConfirmations": 2
+        }
+      ]
     }
-  },
-  receipt: 
-  {
-    schema: 
-    {
-      blockHash: '0xfe0083d38169d3d0fa0330558ef917c6e4884e318df8abaa26cec540ee4f49c',
-      blockNumber: 2980845,
-      transactionHash: '0xfe0083d38169d3d0fa0330558ef917c6e4884e318df8abaa26cec540ee4f49c',
-      transactionIndex: 134,
-      from: '0xabA31e585c4a221d9e196EA46c98793e0A0490bD',
-      to: '0x5eDa0D39f19C28731a64491eD48dF5EDB0945169',
-      contractAddress: '0x583cbbb8a8443b38abcc0c956bece47340ea1367',
-      cumulativeGasUsed: 314159,
-      gasUsed: 30234
-    }
-  },
-  hash: '0xfe0083d38169d3d0fa0330558ef917c6e4884e318df8abaa26cec540ee4f49c',
-  to: '0x5eDa0D39f19C28731a64491eD48dF5EDB0945169',
-  from: '0xabA31e585c4a221d9e196EA46c98793e0A0490bD',
-  tmstmp: 12345678910,
-  asset: 'PLR',
-  value: 7.89,
-  nbConfirmations: 2,
-  status: 'pending'
-  ]
-}
 ```
 </p></details>
 
-## License
+#### Tests
+
+###### Unit tests
+
+```bash
+$ npm test
+```
+
+###### End-to-End tests
+
+Instructions on [Pillar-wallet-QA](https://github.com/pillarwallet/Pillar-wallet-QA) repository
+
+#### License
 
   [MIT](LICENSE)
