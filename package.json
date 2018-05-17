@@ -4,10 +4,10 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "test": "NODE_ENV:test jest",
+    "test": "NODE_ENV=test jest",
     "test:coverage": "jest --coverage",
     "plato": "es6-plato -r -d ./reports/plato ./src"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pillarwallet/blockchain-explorer-sdk.git"

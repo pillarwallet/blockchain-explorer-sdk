@@ -15,7 +15,7 @@ describe('Index Unit Tests', () => {
       sdk.getBalance(payload)
 
       expect(requestProvider.getRequest).toBeCalled();
-      expect(requestProvider.getRequest).toBeCalledWith(endpoints.BCX_GET_BALANCE, payload);
+      expect(requestProvider.getRequest).toBeCalledWith('/wallet-client/balance', payload);
   
       });
 
@@ -31,7 +31,7 @@ describe('Index Unit Tests', () => {
         sdk.txHistory(payload)
 
         expect(requestProvider.getRequest).toBeCalled();
-        expect(requestProvider.getRequest).toBeCalledWith(endpoints.BCX_TX_HISTORY, payload);
+        expect(requestProvider.getRequest).toBeCalledWith('/wallet-client/txhistory', payload);
     
         });
   })

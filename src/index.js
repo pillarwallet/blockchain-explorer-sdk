@@ -2,6 +2,9 @@ var requestProvider = require("./providers/RequestProvider");
 var requesterUtil = require("./util/RequestUtil");
 var endpoints = require("./config/constants.js").httpsURL[process.env.NODE_ENV];
 
+const BCX_GET_BALANCE = "/wallet-client/balance";
+const BCX_TX_HISTORY = "/wallet-client/txhistory";
+
 module.exports = {
      /** 
      * Get balance from BCX
@@ -12,7 +15,7 @@ module.exports = {
      * @return {Promise}
      */
     getBalance: (payload) => {
-      return requestProvider.getRequest(endpoints.BCX_GET_BALANCE, payload);
+      return requestProvider.getRequest(BCX_GET_BALANCE, payload);
       },
 
     /** 
@@ -33,6 +36,6 @@ module.exports = {
         asset: payload.asset || "ALL",
         batchNb: payload.batchNb || "0"
         };
-        return requestProvider.getRequest(endpoints.BCX_TX_HISTORY, data);
+        return requestProvider.getRequest(BCX_TX_HISTORY, data);
       }
   };
