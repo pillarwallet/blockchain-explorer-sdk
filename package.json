@@ -7,7 +7,7 @@
     "test": "NODE_ENV:test jest",
     "test:coverage": "jest --coverage",
     "plato": "es6-plato -r -d ./reports/plato ./src"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pillarwallet/blockchain-explorer-sdk.git"
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/pillarwallet/blockchain-explorer-sdk#readme",
   "dependencies": {
     "dotenv": "^5.0.1",
+    "jasmine": "^3.1.0",
     "node-fetch": "^2.1.2",
     "request-promise": "4.2.2",
     "sinon": "^4.5.0"
