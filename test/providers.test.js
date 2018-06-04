@@ -1,5 +1,6 @@
 var requestProvider = require("../src/providers/RequestProvider");
 var requestUtil = require("../src/util/RequestUtil");
+var endpoints = require("../src/config/constants.js").httpsURL[process.env.NODE_ENV];
 
 describe('Fetch unit Test', () => {
     it('Expected to call fetchRequests with POST', () => {
@@ -8,7 +9,7 @@ describe('Fetch unit Test', () => {
         requestProvider.postRequest("arg1","arg2");
 
         expect(requestUtil.fetchRequests).toBeCalled();
-        expect(requestUtil.fetchRequests).toBeCalledWith(process.env.BCX_SERVER_URL + "arg1","arg2", 'POST', undefined);
+        expect(requestUtil.fetchRequests).toBeCalledWith(endpoints.BCX_SERVER_URL + "arg1","arg2", 'POST', undefined);
     });
 
     it('Expected to call fetchRequests with GET', () => {
@@ -17,7 +18,7 @@ describe('Fetch unit Test', () => {
         requestProvider.getRequest("arg1","arg2");
 
         expect(requestUtil.fetchRequests).toBeCalled();
-        expect(requestUtil.fetchRequests).toBeCalledWith(process.env.BCX_SERVER_URL + "arg1",undefined, 'GET', "arg2");
+        expect(requestUtil.fetchRequests).toBeCalledWith(endpoints.BCX_SERVER_URL + "arg1",undefined, 'GET', "arg2");
     });
 
     it('Expected to call fetchRequests with PUT', () => {
@@ -26,7 +27,7 @@ describe('Fetch unit Test', () => {
         requestProvider.putRequest("arg1","arg2");
 
         expect(requestUtil.fetchRequests).toBeCalled();
-        expect(requestUtil.fetchRequests).toBeCalledWith(process.env.BCX_SERVER_URL + "arg1","arg2", 'PUT', undefined);
+        expect(requestUtil.fetchRequests).toBeCalledWith(endpoints.BCX_SERVER_URL + "arg1","arg2", 'PUT', undefined);
     });
 
     it('Expected to call fetchRequests with DELETE', () => {
@@ -35,7 +36,7 @@ describe('Fetch unit Test', () => {
         requestProvider.deleteRequest("arg1","arg2");
 
         expect(requestUtil.fetchRequests).toBeCalled();
-        expect(requestUtil.fetchRequests).toBeCalledWith(process.env.BCX_SERVER_URL + "arg1","arg2", 'DELETE', undefined);
+        expect(requestUtil.fetchRequests).toBeCalledWith(endpoints.BCX_SERVER_URL + "arg1","arg2", 'DELETE', undefined);
     });
 });
 
