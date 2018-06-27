@@ -1,6 +1,6 @@
 var requestProvider = require("../src/providers/RequestProvider");
-var sdk = require("../src");
-var endpoints = require("../src/config/constants.js").httpsURL[process.env.NODE_ENV];
+var SDK = require("../src/index.js");
+var bcx = new SDK({apiUrl:'bcx-url'});
 
 describe('Index Unit Tests', () => {
 
@@ -12,10 +12,9 @@ describe('Index Unit Tests', () => {
         address:         "arg1",
         asset:           "arg2",
       };
-      sdk.getBalance(payload)
-
+      bcx.getBalance(payload)
       expect(requestProvider.getRequest).toBeCalled();
-      expect(requestProvider.getRequest).toBeCalledWith('/wallet-client/balance', payload);
+      expect(requestProvider.getRequest).toBeCalledWith(bcx.url + '/wallet-client/balance', payload);
   
       });
 
@@ -28,10 +27,10 @@ describe('Index Unit Tests', () => {
           asset:      "arg3",
           batchNb:    "arg4"
         };
-        sdk.txHistory(payload)
+        bcx.txHistory(payload)
 
         expect(requestProvider.getRequest).toBeCalled();
-        expect(requestProvider.getRequest).toBeCalledWith('/wallet-client/txhistory', payload);
+        expect(requestProvider.getRequest).toBeCalledWith(bcx.url +'/wallet-client/txhistory', payload);
     
         });
   })
