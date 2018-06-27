@@ -30,6 +30,7 @@ jobs:
       - run:
           name: build the 'dist' folder
           command: yarn build
+      - run: ls -al
       - persist_to_workspace:
           root: dist
           paths:
@@ -69,6 +70,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/blockchain-explorer-sdk/dist
+      - run: ls -al
       - run:
           name: Append circleCI build number to version
           command: |
