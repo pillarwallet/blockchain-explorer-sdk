@@ -29,7 +29,7 @@ jobs:
             - ./node_modules
       - run:
           name: build the 'dist' folder
-          command: yarn build
+          command: npm run build-production
       - run: ls -al
       - persist_to_workspace:
           root: dist

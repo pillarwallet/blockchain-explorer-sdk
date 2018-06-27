@@ -7,6 +7,7 @@
     "test": "NODE_ENV=test jest",
     "test:coverage": "jest --coverage",
     "build": "webpack",
+    "build-production": "webpack --mode=production",
     "plato": "es6-plato -r -d ./reports/plato ./src"
   },
   "repository": {
