@@ -1,4 +1,7 @@
 node_modules/
-.nprc
+reports/
+dist/
 coverage/
+
+.npmrc
 .env
