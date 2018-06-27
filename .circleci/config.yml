@@ -27,6 +27,13 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
+      - run:
+          name: build the 'dist' folder
+          command: yarn build
+      - persist_to_workspace:
+          root: dist
+          paths:
+            - index.js
 
   test:
     working_directory: ~/blockchain-explorer-sdk
@@ -60,12 +67,14 @@ jobs:
       - image: circleci/node:8.9.4
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/blockchain-explorer-sdk/workspace
       - run:
           name: Append circleCI build number to version
           command: |
             git config user.email "devops@pillar.io"
             git config user.name "Issabot"
-            npm version $(node -e "console.log( require('./package.json').version )")-$CIRCLE_BUILD_NUM
+            npm version $(node -e "const currentVersion=require('./package.json').version; const firstTwoDots=currentVersion.substring(0, currentVersion.lastIndexOf('.')+1); console.log(firstTwoDots);")$CIRCLE_BUILD_NUM
       - run:
             name: Authenticate with registry
             command: curl -u $ARTIFACTORY_PUBLISHING_USER:$ARTIFACTORY_PUBLISHING_PASSWORD https://pillarproject.jfrog.io/pillarproject/api/npm/auth >> ~/blockchain-explorer-sdk/.npmrc
