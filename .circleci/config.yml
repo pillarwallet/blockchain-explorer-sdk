@@ -68,7 +68,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/blockchain-explorer-sdk/workspace
+          at: ~/blockchain-explorer-sdk/dist
       - run:
           name: Append circleCI build number to version
           command: |
