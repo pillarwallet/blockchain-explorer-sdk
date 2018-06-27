@@ -1,6 +1,4 @@
 var requesterUtil = require("../util/RequestUtil");
-var endpoints = require("../config/constants.js").httpsURL[process.env.NODE_ENV];
-
 
 module.exports = {
 
@@ -11,7 +9,7 @@ module.exports = {
     * @param  {Object} body
     */
     postRequest: (url, body) => {
-        return requesterUtil.fetchRequests(endpoints.BCX_SERVER_URL + url, body, 'POST', undefined);
+        return requesterUtil.fetchRequests(url, body, 'POST', undefined);
     },
 /** 
     * Https GET request
@@ -20,7 +18,7 @@ module.exports = {
     * @param  {Object} body
     */
     getRequest: (url, body) => {
-        return requesterUtil.fetchRequests(endpoints.BCX_SERVER_URL + url, undefined, 'GET', body);
+        return requesterUtil.fetchRequests(url, undefined, 'GET', body);
     },
 /** 
     * Https PUT request
@@ -29,7 +27,7 @@ module.exports = {
     * @param  {Object} body
     */
     putRequest: (url, body) => {
-        return requesterUtil.fetchRequests(endpoints.BCX_SERVER_URL + url, body, 'PUT', undefined);
+        return requesterUtil.fetchRequests(url, body, 'PUT', undefined);
     },
 /** 
     * Https DELETE request
@@ -38,6 +36,6 @@ module.exports = {
     * @param  {Object} body
     */
     deleteRequest: (url, body) => {
-        return requesterUtil.fetchRequests(endpoints.BCX_SERVER_URL + url, body, 'DELETE', undefined);
+        return requesterUtil.fetchRequests(url, body, 'DELETE', undefined);
     }
 }
