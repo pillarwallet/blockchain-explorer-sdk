@@ -1,7 +1,7 @@
 {
   "name": "blockchain-explorer-sdk",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.1.1",
+  "description": "The Blockchain Explorer SDK (aka BCX).",
   "main": "./dist/index.js",
   "scripts": {
     "test": "NODE_ENV=test jest",
@@ -20,18 +20,20 @@
   },
   "homepage": "https://github.com/pillarwallet/blockchain-explorer-sdk#readme",
   "dependencies": {
-    "convict": "^4.2.0",
-    "dotenv": "^5.0.1",
-    "request": "^2.87.0",
+    "convict": "4.2.0",
+    "request": "2.87.0",
     "request-promise": "4.2.2",
-    "sinon": "^4.5.0",
-    "webpack": "^4.10.2",
-    "webpack-cli": "^3.0.1"
+    "webpack": "4.10.2",
+    "webpack-cli": "3.0.1"
   },
   "devDependencies": {
-    "jest": "^22.4.3",
-    "jest-html-reporter": "2.0.0",
-    "es6-plato": "latest"
+    "es6-plato": "latest",
+    "eslint": "5.0.1",
+    "eslint-config-airbnb-base": "13.0.0",
+    "eslint-plugin-import": "2.13.0",
+    "eslint-plugin-jest": "21.17.0",
+    "jest": "22.4.3",
+    "jest-html-reporter": "2.0.0"
   },
   "jest": {
     "roots": [

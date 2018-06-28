@@ -1,21 +1,10 @@
-var requestProvider = require("./providers/RequestProvider");
-var requesterUtil = require("./util/RequestUtil");
+const requestProvider = require('./providers/RequestProvider');
 
-const BCX_GET_BALANCE = "/wallet-client/balance";
-const BCX_TX_HISTORY = "/wallet-client/txhistory";
+const BCX_GET_BALANCE = '/wallet-client/balance';
+const BCX_TX_HISTORY = '/wallet-client/txhistory';
 
 class BcxSdk {
-
   constructor(configuration) {
-    this.url = configuration.apiUrl;
-  }
-
-  /**
-   * //TODO do this better
-   * constructor seems to go missing between here and pillarwallet app
-   * providing a mutator to do the same job..
-   */
-  setConfiguration() {
     this.url = configuration.apiUrl;
   }
 
@@ -36,18 +25,23 @@ class BcxSdk {
   * @method txHistory Wallet requests transactions history for specified asset
   * @param  {Object} payload
   * @param  {String} payload.address1 Ethereum address for which tx history is requested
-  * @param  {String} [payload.address2] (default = "ALL") Ethereum public address, returned transaction history will only contain transactions between address1 and address2
-  * @param  {String} [payload.asset] (default = "ALL") Ticker of the asset for which transaction history is requested. If not specified transaction history will contain transactions for all assets
-  * @param  {String} [payload.batchNb] (default = "0")  Batch number for transaction history. If batchNb = 0 client will receive last 10 transactions history, if batch number =1 client will receive tx history between last 10th transaction and last 20th ransction etc…
+  * @param  {String} [payload.address2] (default = "ALL") Ethereum public address, returned
+  * transaction history will only contain transactions between address1 and address2
+  * @param  {String} [payload.asset] (default = "ALL") Ticker of the asset for which
+  * transaction history is requested. If not specified transaction history will contain
+  * transactions for all assets
+  * @param  {String} [payload.batchNb] (default = "0")  Batch number for transaction history.
+  * If batchNb = 0 client will receive last 10 transactions history, if batch number =1
+  * client will receive tx history between last 10th transaction and last 20th ransction etc…
   * @return {Promise}
   */
   txHistory(payload) {
     const data = {
       address1: payload.address1,
-      address2: payload.address2 || "ALL",
-      asset: payload.asset || "ALL",
-      batchNb: payload.batchNb || "0"
-      };
+      address2: payload.address2 || 'ALL',
+      asset: payload.asset || 'ALL',
+      batchNb: payload.batchNb || '0',
+    };
     return requestProvider.getRequest(this.url + BCX_TX_HISTORY, data);
   }
 }

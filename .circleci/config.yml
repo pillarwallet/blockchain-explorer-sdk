@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/blockchain-explorer-sdk
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:8.11.3
     steps:
       - checkout
       - run:
@@ -16,13 +16,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Install
-          command: yarn install
-      - run:
-          name: Install TypeScript packages globally
-          command: sudo yarn global add typescript tsc ts-node
-      - run:
-          name: Compile TypeScript to JS
-          command: tsc
+          command: npm install
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -39,7 +33,7 @@ jobs:
   test:
     working_directory: ~/blockchain-explorer-sdk
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:8.11.3
     steps:
       - checkout
       - run:
@@ -52,7 +46,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Install
-          command: yarn install
+          command: npm install
       - run:
           name: unit-test
           command:  npm run test:coverage
@@ -65,7 +59,7 @@ jobs:
   publish:
     working_directory: ~/blockchain-explorer-sdk
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:8.11.3
     steps:
       - checkout
       - attach_workspace:
