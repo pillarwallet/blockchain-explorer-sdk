@@ -6,11 +6,11 @@ module.exports = {
   target: 'node',
   mode: 'development',
   resolve: {
-    extensions: [ '.js' ]
+    extensions: ['.js'],
   },
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: "commonjs2"
-  }
+    libraryTarget: 'commonjs2',
+  },
 };

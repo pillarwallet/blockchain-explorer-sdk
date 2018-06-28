@@ -4,6 +4,7 @@
   "description": "The Blockchain Explorer SDK (aka BCX).",
   "main": "./dist/index.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "NODE_ENV=test jest",
     "test:coverage": "jest --coverage",
     "build": "webpack",
