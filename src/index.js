@@ -11,15 +11,6 @@ class BcxSdk {
   }
 
   /**
-   * //TODO do this better
-   * constructor seems to go missing between here and pillarwallet app
-   * providing a mutator to do the same job..
-   */
-  setConfiguration() {
-    this.url = configuration.apiUrl;
-  }
-
-  /**
    * Get balance from BCX
    * @method getBalance Wallet requests asset balance
    * @param  {Object} payload
