@@ -1,5 +1,9 @@
 const requestProvider = require('./providers/RequestProvider');
 
+const { validate } = require('./schemas');
+const getBalanceSchema = require('./schemas/getBalance.json');
+const txHistorySchema = require('./schemas/txHistory.json');
+
 const BCX_GET_BALANCE = '/wallet-client/balance';
 const BCX_TX_HISTORY = '/wallet-client/txhistory';
 
@@ -12,11 +16,17 @@ class BcxSdk {
    * Get balance from BCX
    * @method getBalance Wallet requests asset balance
    * @param  {Object} payload
-   * @param  {Object} payload.address Ethereum address for which balance is requested
+   * @param  {String} payload.address Ethereum address for which balance is requested
    * @param  {String} payload.asset Ticker of the asset for which balance is requested
    * @return {Promise}
    */
   getBalance(payload) {
+    try {
+      validate(getBalanceSchema, payload);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+
     return requestProvider.getRequest(this.url + BCX_GET_BALANCE, payload);
   }
 
@@ -42,6 +52,13 @@ class BcxSdk {
       asset: payload.asset || 'ALL',
       batchNb: payload.batchNb || '0',
     };
+
+    try {
+      validate(txHistorySchema, payload);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+
     return requestProvider.getRequest(this.url + BCX_TX_HISTORY, data);
   }
 }
