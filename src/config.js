@@ -1,12 +1,12 @@
-var convict = require('convict');
- 
+const convict = require('convict');
+
 // Define a schema
-var config = convict({
+const config = convict({
   env: {
-    doc: "The application environment.",
-    format: ["production", "development", "qa"],
-    default: "development",
-    env: "NODE_ENV"
+    doc: 'The application environment.',
+    format: ['production', 'development', 'qa'],
+    default: 'development',
+    env: 'NODE_ENV',
   },
   bcxServerUrl: {
     format: 'url',
@@ -29,10 +29,12 @@ var config = convict({
 });
 
 // Load environment dependent configuration
-var env = config.get('env');
-config.loadFile('./config/' + env + '.json');
- 
+const env = config.get('env');
+config.loadFile(`./config/${env}.json`);
+
 // Perform validation
-config.validate({allowed: 'strict'});
- 
+config.validate({
+  allowed: 'strict',
+});
+
 module.exports = config;
