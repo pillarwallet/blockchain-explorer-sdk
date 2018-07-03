@@ -4,6 +4,7 @@
   "description": "The Blockchain Explorer SDK (aka BCX).",
   "main": "./dist/index.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "NODE_ENV=test jest",
     "test:coverage": "jest --coverage",
     "build": "webpack",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/pillarwallet/blockchain-explorer-sdk#readme",
   "dependencies": {
+    "ajv": "6.5.1",
     "convict": "4.2.0",
     "request": "2.87.0",
     "request-promise": "4.2.2",
