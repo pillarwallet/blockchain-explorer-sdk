@@ -37,7 +37,8 @@ class BcxSdk {
       address1: payload.address1,
       address2: payload.address2 || "ALL",
       asset: payload.asset || "ALL",
-      batchNb: payload.batchNb || "0"
+      nbTx: payload.nbTx || 10,
+      fromIndex: payload.fromIndex || 0
       };
     return requestProvider.getRequest(this.url + BCX_TX_HISTORY, data);
   }

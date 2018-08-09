@@ -22,10 +22,11 @@ describe('Index Unit Tests', () => {
 
         requestProvider.getRequest = jest.fn()
         let payload  = { 
-          address1:   "arg1",
-          address2:   "arg2",
-          asset:      "arg3",
-          batchNb:    "arg4"
+          address1:  "arg1",
+          address2:  "arg2",
+          asset:     "arg3",
+          nbTx:      "arg4",
+          fromIndex: "arg5"
         };
         bcx.txHistory(payload)
 
