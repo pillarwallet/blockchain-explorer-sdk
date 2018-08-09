@@ -7,13 +7,15 @@ const bcx = new SDK({
   apiUrl: API_URL,
 });
 
+let getRequest = requestProvider.getRequest;
+
 describe('BcxSdk Class', () => {
   beforeEach(() => {
     requestProvider.getRequest = jest.fn();
   });
 
   afterEach(() => {
-    requestProvider.getRequest.mockRestore();
+    requestProvider.getRequest = getRequest;
   });
 
   describe('.getBalance', () => {
@@ -47,8 +49,9 @@ describe('BcxSdk Class', () => {
       const payload = {
         address1: 'arg1',
         address2: 'arg2',
-        asset: 'arg3',
-        batchNb: 'arg4',
+        asset:    'arg3',
+        nbTx: 4,
+        fromIndex: 5
       };
 
       bcx.txHistory(payload);
@@ -78,7 +81,8 @@ describe('BcxSdk Class', () => {
         address1,
         address2: 'ALL',
         asset: 'ALL',
-        batchNb: '0',
+        nbTx: 10,
+        fromIndex: 0
       });
     });
   });

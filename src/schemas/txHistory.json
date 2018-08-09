@@ -13,8 +13,11 @@
     "asset": {
       "type": "string"
     },
-    "batchNb": {
-      "type": "string"
+    "nbTx": {
+      "type": "number"
+    },
+    "fromIndex": {
+      "type": "number"
     }
   },
   "required": ["address1"]
