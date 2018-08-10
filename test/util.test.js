@@ -24,7 +24,7 @@ describe('Request unit Test', () => {
     expect(test.uri.href).toBe(options.uri);
     expect(test.body).toBe(options.body);
     expect(test.method).toBe(options.method);
-    expect(test._rp_options.qs).toBe(options.qs); // eslint-disable-line
+    expect(test._rp_options.qs).toBe(options.qs); 
     expect(test.headers).toEqual(options.headers);
   });
 });
