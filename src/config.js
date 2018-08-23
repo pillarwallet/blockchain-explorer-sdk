@@ -26,6 +26,12 @@ const config = convict({
     arg: 'bcxTxHistory',
     env: 'BCX_TX_HISTORY',
   },
+  bcxGasInfo: {
+    format: 'url',
+    default: '',
+    arg: 'bcxGasInfo',
+    env: 'BCX_GAS_INFO',
+  }
 });
 
 // Load environment dependent configuration

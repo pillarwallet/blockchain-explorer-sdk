@@ -3,9 +3,11 @@ const requestProvider = require('./providers/RequestProvider');
 const { validate } = require('./schemas');
 const getBalanceSchema = require('./schemas/getBalance.json');
 const txHistorySchema = require('./schemas/txHistory.json');
+const gasInfoSchema = require('./schemas/gasInfo.json');
 
 const BCX_GET_BALANCE = '/wallet-client/balance';
 const BCX_TX_HISTORY = '/wallet-client/txhistory';
+const BCX_GAS_INFO = '/wallet-client/gasinfo';
 
 class BcxSdk {
   constructor(configuration) {
@@ -40,9 +42,9 @@ class BcxSdk {
   * @param  {String} [payload.asset] (default = "ALL") Ticker of the asset for which
   * transaction history is requested. If not specified transaction history will contain
   * transactions for all assets
-  * @param  {String} [payload.batchNb] (default = "0")  Batch number for transaction history.
-  * If batchNb = 0 client will receive last 10 transactions history, if batch number =1
-  * client will receive tx history between last 10th transaction and last 20th ransction etc…
+  * @param  {Number} [payload.nbTx] (default = "10")  Number of transactions to be shown.
+  * @param  {Number} [payload.fromIndex] (default = "0")  Starting point of transaction history.
+  * 0 means the most recent entry.
   * @return {Promise}
   */
   txHistory(payload) {
@@ -61,6 +63,23 @@ class BcxSdk {
     }
 
     return requestProvider.getRequest(this.url + BCX_TX_HISTORY, data);
+  }
+
+  /**
+   * Get gas info from BCX
+   * @method gasInfo Wallet requests asset balance
+   * @param  {Object} payload
+   * @param  {Number} payload.nBlocks Number of blocks. Default=200, Max=200
+   * @return {Promise}
+   */
+  gasInfo(payload={}) {
+    try {
+      validate(gasInfoSchema, payload);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+
+    return requestProvider.getRequest(this.url + BCX_GAS_INFO, payload);
   }
 }
 

@@ -1,0 +1,12 @@
+{
+  "title": "BCX SDK - Gas Info",
+  "description": "Schema definition for BCX SDK - gasInfo method",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "nBlocks": {
+      "type": "number"
+    }
+  },
+  "required": []
+}

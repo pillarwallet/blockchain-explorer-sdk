@@ -85,5 +85,27 @@ describe('BcxSdk Class', () => {
         fromIndex: 0
       });
     });
+
+    describe('.gasInfo', () => {
+
+      it('makes a GET request to /wallet-client/gasinfo with a payload', () => {
+        const payload = {
+          nBlocks: 10,
+        };
+  
+        bcx.gasInfo(payload);
+  
+        expect(requestProvider.getRequest).toBeCalled();
+        expect(requestProvider.getRequest).toBeCalledWith(`${API_URL}/wallet-client/gasinfo`, payload);
+      });
+
+      it('makes a GET request to /wallet-client/gasinfo with no payload', () => {
+  
+        bcx.gasInfo();
+  
+        expect(requestProvider.getRequest).toBeCalled();
+        expect(requestProvider.getRequest).toBeCalledWith(`${API_URL}/wallet-client/gasinfo`, {});
+      });
+    })
   });
 });
