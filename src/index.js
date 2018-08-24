@@ -44,7 +44,7 @@ class BcxSdk {
   * transactions for all assets
   * @param  {Number} [payload.nbTx] (default = "10")  Number of transactions to be shown.
   * @param  {Number} [payload.fromIndex] (default = "0")  Starting point of transaction history.
-  * 0 means the most recent entry.
+  * 0 means the first (oldest) entry.
   * @return {Promise}
   */
   txHistory(payload) {
