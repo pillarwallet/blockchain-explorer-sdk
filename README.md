@@ -11,79 +11,20 @@ $ npm install @pillarwallet/bcx-api
 ## Usage
 
 ```js
-//var bcx = require('@pillarwallet/bcx-api')
-var bcx = require('./index.js')
+var bcx = require('@pillarwallet/bcx-api')
+bcx = new BCX({apiUrl:`https://apiurl.io:${port}`)
 ```
-
-#### Account and FCMIID
-
-###### Registration
-
-```js
-
-const walletId = 1234;
-const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
-const fcmIID = "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV";
-const requesterPublicKey = "0x5eDa0D39f19C28731a64491eD48dF5EDB0945169";
-   
-bcx.registerAccount(walletId, walletAddress, fcmIID, requesterPublicKey, privateKey)
-```
-<details><summary>Response</summary><p>
-
-    [200] - NEW ACCOUNT WAS REGISTERED!
-
-</p></details>
-
-###### Remove an account
-```js
-
-const walletId = 1234;
-const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
-
-bcx.unregisterAccount(walletId, walletAddress, privateKey)
-```
-###### FCMIID Uptade
-
-```js
-const walletId = 1234;
-const walletAddress = "0xabA31e585c4a221d9e196EA46c98793e0A0490bD";
-const newFCMIID =  "APA91bGEmgAWTTgv1SiOwxMBQHKBWKe8WSAPsplsxQNm2nBgVx0DUAIOrRUPsLlG5Xt1HytSi60PxYaZBozAnml4UKySH21IRwKvENjjgGFpCxXAGJ40HLud4ljpvSbCymOdn-dPtPaV";
-
-bcx.updateFCMIID(walletID, walletAddress, newFMCIID);
-```
-
-<details><p><summary>Response</summary>
-
-    [200] FCM IID UPDATED FOR ACCOUNT 1234
-
-</p></details>
-
-#### Balance and transaction history
-
-###### Balance
-
-```js
-const walletAddress = "0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895";
-const asset = "ETH";
-const balance = bcx.getBalance(walletAddress, asset)
-```
-<details><summary>Response</summary><p>
-
-```js
-    { 
-        address: '0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895',
-        asset: 'ETH',
-        balance: '5.999704284' 
-    }
-```
-</p></details>
+####  Transaction history, gas station, and gas info
 
 ###### Transaction History
 ```js
-const walletAddress = "0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895";
-const asset = "ETH";
-// txHistory(toAddress: string, fromAddress : string, asset: string, fromTimestamp: number)
-history = bcx.txHistory(walletAddress, "ALL", "ALL", 0)
+
+const payload = {
+      address1: '0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895',
+      asset: 'ETH',
+    }
+
+bcx.txHistory(payload).then(console.log)
 ```
 
 <details><summary>Response</summary><p>
@@ -135,6 +76,45 @@ history = bcx.txHistory(walletAddress, "ALL", "ALL", 0)
 }
 ```
 </p></details>
+
+###### Gas Station
+```js
+bcx.gasStation().then(console.log);
+```
+
+<details><summary>Response</summary><p>
+
+```js
+{ result: 'success',
+  safeLow: 7,
+  standard: 8,
+  fast: 13,
+  fastest: 50,
+  blockTime: 15,
+  blockNumber: 6795711 }
+```
+
+</p></details>
+
+###### Gas Info
+```js
+bcx.gasInfo().then(console.log);
+```
+
+<details><summary>Response</summary><p>
+
+```js
+{
+result: 'success',
+avgGasPrice: 6984665476.524783,
+stdDev: 4497814031.576423,
+topBlock: 6795711
+}
+```
+
+</p></details>
+
+
 
 ## License
 

@@ -31,6 +31,12 @@ const config = convict({
     default: '',
     arg: 'bcxGasInfo',
     env: 'BCX_GAS_INFO',
+  },
+  bcxGasStation: {
+    format: 'url',
+    default: '',
+    arg: 'bcxGasStation',
+    env: 'BCX_GAS_STATION',
   }
 });
 

@@ -106,6 +106,17 @@ describe('BcxSdk Class', () => {
         expect(requestProvider.getRequest).toBeCalled();
         expect(requestProvider.getRequest).toBeCalledWith(`${API_URL}/wallet-client/gasinfo`, {});
       });
+    });
+
+    describe('.gasStation', () => {
+      it('makes a GET request to /wallet-client/gasstation', () => {
+  
+        bcx.gasStation();
+
+        expect(requestProvider.getRequest).toBeCalled();
+        expect(requestProvider.getRequest).toBeCalledWith(`${API_URL}/wallet-client/gasstation`, {});
+      });
     })
+
   });
 });

@@ -8,6 +8,7 @@ const gasInfoSchema = require('./schemas/gasInfo.json');
 const BCX_GET_BALANCE = '/wallet-client/balance';
 const BCX_TX_HISTORY = '/wallet-client/txhistory';
 const BCX_GAS_INFO = '/wallet-client/gasinfo';
+const BCX_GAS_STATION = '/wallet-client/gasstation';
 
 class BcxSdk {
   constructor(configuration) {
@@ -67,9 +68,7 @@ class BcxSdk {
 
   /**
    * Get gas info from BCX
-   * @method gasInfo Wallet requests asset balance
-   * @param  {Object} payload
-   * @param  {Number} payload.nBlocks Number of blocks. Default=200, Max=200
+   * @method gasInfo Wallet requests gas info
    * @return {Promise}
    */
   gasInfo(payload={}) {
@@ -81,6 +80,16 @@ class BcxSdk {
 
     return requestProvider.getRequest(this.url + BCX_GAS_INFO, payload);
   }
+
+  /**
+   * Get gas price suggestion from BCX
+   * @method gasInfo Wallet requests gas price suggestion
+   * @return {Promise}
+   */
+  gasStation() {
+    return requestProvider.getRequest(this.url + BCX_GAS_STATION, {});
+  }
+
 }
 
 module.exports = BcxSdk;
