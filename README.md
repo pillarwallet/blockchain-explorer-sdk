@@ -8,6 +8,10 @@ Pillar blockchain explorer SDK for [node](http://nodejs.org).
 ```bash
 $ npm install @pillarwallet/bcx-api
 ```
+- copy /.sample.env file to /.env with your local development settings
+**Development**
+To enable dev mode - add `NODE_ENV=development` to `.env` file
+
 ## Usage
 
 ```js
