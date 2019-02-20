@@ -83,7 +83,7 @@ class BcxSdk {
 
   /**
    * Get gas price suggestion from BCX
-   * @method gasInfo Wallet requests gas price suggestion
+   * @method gasStation Wallet requests gas price suggestion
    * @return {Promise}
    */
   gasStation() {
