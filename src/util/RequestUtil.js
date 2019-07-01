@@ -29,6 +29,7 @@ const request = require('request-promise');
 * @param  {String} Type
 */
 exports.fetchRequests = (url, body, type, queryParams) => {
+  const rawData = body.replace(/['"]+/g, '');
   const options = {
     uri: url,
     method: type,
@@ -36,8 +37,7 @@ exports.fetchRequests = (url, body, type, queryParams) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body,
-    json: true,
+    body: rawData,
   };
 
   return request(options);
