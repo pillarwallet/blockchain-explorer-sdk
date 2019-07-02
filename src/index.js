@@ -69,6 +69,12 @@ class BcxSdk {
       limit: payload.nbTx,
     };
 
+    Object.keys(data).forEach((key) => {
+      if (data[key] === undefined) {
+        delete data[key];
+      }
+    });
+
     return requestProvider.postRequest(this.url + BCX_TX_HISTORY, data);
   }
 
