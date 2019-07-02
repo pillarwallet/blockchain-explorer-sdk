@@ -22,7 +22,7 @@ SOFTWARE.
 const requestProvider = require('../src/providers/RequestProvider');
 const SDK = require('../src/index.js');
 
-const API_URL = 'http://bcx-url.com';
+const API_URL = 'bcx-url';
 
 const bcx = new SDK({
   apiUrl: API_URL,
