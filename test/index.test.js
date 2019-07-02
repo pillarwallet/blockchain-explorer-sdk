@@ -55,7 +55,7 @@ describe('BcxSdk Class', () => {
       bcx.txHistory(payload);
       expect(requestProvider.postRequest).toBeCalled();
       expect(requestProvider.postRequest).toBeCalledWith(
-        `${API_URL}/wallet-client/txhistory`,
+        API_URL,
         {
           from: 'arg1',
           to: 'arg2',
@@ -65,18 +65,22 @@ describe('BcxSdk Class', () => {
           protocol: 'Ethereum',
           network: 'mainnet',
         },
+        'transaction',
+        'searchTransaction',
       );
     });
 
-    it('makes a POST request to /wallet/txhistory with no payload', () => {
+    it('makes a POST request to txhistory with no payload', () => {
       bcx.txHistory({});
       expect(requestProvider.postRequest).toBeCalled();
       expect(requestProvider.postRequest).toBeCalledWith(
-        `${API_URL}/wallet-client/txhistory`,
+        API_URL,
         {
           protocol: 'Ethereum',
           network: 'mainnet',
         },
+        'transaction',
+        'searchTransaction',
       );
     });
 

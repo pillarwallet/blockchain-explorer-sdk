@@ -25,7 +25,6 @@ const { validate } = require('./schemas');
 const txHistorySchema = require('./schemas/txHistory.json');
 const gasInfoSchema = require('./schemas/gasInfo.json');
 
-const BCX_TX_HISTORY = '/wallet-client/txhistory';
 const BCX_GAS_INFO = '/wallet-client/gasinfo';
 const BCX_GAS_STATION = '/wallet-client/gasstation';
 
@@ -75,7 +74,7 @@ class BcxSdk {
       }
     });
 
-    return requestProvider.postRequest(this.url + BCX_TX_HISTORY, data);
+    return requestProvider.postRequest(this.url, data, 'transaction', 'searchTransaction');
   }
 
   /**

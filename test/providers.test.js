@@ -22,22 +22,21 @@ SOFTWARE.
 const requestProvider = require('../src/providers/RequestProvider');
 const requestUtil = require('../src/util/RequestUtil');
 
-let fetchRequests = requestUtil.fetchRequests;
+const fetchRequestsRestore = requestUtil.fetchRequests;
 
 describe('Fetch unit Test', () => {
-
   beforeEach(() => {
     requestUtil.fetchRequests = jest.fn();
   });
 
   afterEach(() => {
-    requestUtil.fetchRequests = fetchRequests;
+    requestUtil.fetchRequests = fetchRequestsRestore;
   });
 
   it('Expected to call fetchRequests with POST', () => {
-    requestProvider.postRequest('arg1', 'arg2');
+    requestProvider.postRequest('arg1', 'arg2', 'arg3', 'arg4');
     expect(requestUtil.fetchRequests).toBeCalled();
-    expect(requestUtil.fetchRequests).toBeCalledWith('arg1', 'arg2', 'POST', undefined);
+    expect(requestUtil.fetchRequests).toBeCalledWith('arg1', 'arg2', 'POST', undefined, 'arg3', 'arg4');
   });
 
   it('Expected to call fetchRequests with GET', () => {

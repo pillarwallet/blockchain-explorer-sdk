@@ -26,10 +26,34 @@ const request = require('request-promise');
 * @method fetchRequests
 * @param  {String} url
 * @param  {Object} body
-* @param  {String} Type
+* @param  {String} type
+* @param  {String} queryParams
+* @param  {String} [graphEndpoint = null]
+* @param  {String} [graphMethod = null]
 */
-exports.fetchRequests = (url, body, type, queryParams) => {
-  const rawData = body.replace(/['"]+/g, '');
+exports.fetchRequests = (
+  url,
+  body,
+  type,
+  queryParams,
+  graphEndpoint = null,
+  graphMethod = null,
+) => {
+  let payload = body;
+  const rawData = body.replace(/['"{}]+/g, '');
+  switch (type) {
+    case 'POST':
+      payload = `${graphEndpoint} { ${graphMethod}(${rawData}) }`;
+      break;
+    case 'GET':
+      break;
+    case 'PUT':
+      break;
+    case 'DELETE':
+      break;
+    default:
+      break;
+  }
   const options = {
     uri: url,
     method: type,
@@ -37,7 +61,7 @@ exports.fetchRequests = (url, body, type, queryParams) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: rawData,
+    body: payload,
   };
 
   return request(options);

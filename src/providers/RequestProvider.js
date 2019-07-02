@@ -24,15 +24,17 @@ const requesterUtil = require('../util/RequestUtil');
 module.exports = {
 /**
   * Https POST request
-  * @method registerAccount
+  * @method postRequest - Sends a POST request to graph API: 'endpoind { method(args) }'
   * @param  {String} url
   * @param  {Object} body
+  * @param  {String} graphEndpoint
+  * @param  {String} graphMethod
   */
-  postRequest: (url, body) => requesterUtil.fetchRequests(url, body, 'POST', undefined),
+  postRequest: (url, body, graphEndpoint, graphMethod) => requesterUtil.fetchRequests(url, body, 'POST', undefined, graphEndpoint, graphMethod),
 
   /**
     * Https GET request
-    * @method registerAccount
+    * @method getRequest
     * @param  {String} url
     * @param  {Object} body
     */
@@ -40,7 +42,7 @@ module.exports = {
 
   /**
     * Https PUT request
-    * @method registerAccount
+    * @method putRequest
     * @param  {String} url
     * @param  {Object} body
     */
@@ -48,9 +50,8 @@ module.exports = {
 
   /**
     * Https DELETE request
-    * @method registerAccount
+    * @method deleteRequest
     * @param  {String} url
-    * @param  {Object} body
     */
   deleteRequest: (url, body) => requesterUtil.fetchRequests(url, body, 'DELETE', undefined),
 };
