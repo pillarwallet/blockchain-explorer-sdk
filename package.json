@@ -52,8 +52,7 @@
     "coverageReporters": [
       "lcov"
     ],
-    "coverageDirectory": "./reports",
-    "testURL": "http://localhost/"
+    "coverageDirectory": "./reports"
   },
   "jest-html-reporter": {
     "pageTitle": "Jest results",
