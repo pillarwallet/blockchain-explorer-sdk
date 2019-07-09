@@ -31,7 +31,7 @@ const request = require('request-promise');
 * @param  {String} [graphEndpoint = null]
 * @param  {String} [graphMethod = null]
 */
-exports.fetchRequests = (
+exports.fetchRequests = async (
   url,
   body,
   type,
@@ -39,21 +39,15 @@ exports.fetchRequests = (
   graphEndpoint = null,
   graphMethod = null,
 ) => {
-  let payload = body;
-  const rawData = body.replace(/['"{}]+/g, '');
-  switch (type) {
-    case 'POST':
-      payload = `${graphEndpoint} { ${graphMethod}(${rawData}) }`;
-      break;
-    case 'GET':
-      break;
-    case 'PUT':
-      break;
-    case 'DELETE':
-      break;
-    default:
-      break;
-  }
+  const payload = body;
+  /**
+   * Format the payload into graphQl body format.
+   * 1) Remove curly brackets
+   * 2) Remove double quotes from keys
+   */
+  let rawData = JSON.stringify(body).replace(/[{}]+/g, '');
+  rawData = rawData.replace(/"(\w+)"\s*:/g, '$1:');
+
   const options = {
     uri: url,
     method: type,
@@ -64,5 +58,33 @@ exports.fetchRequests = (
     body: payload,
   };
 
-  return request(options);
+  let queryResponse;
+  let queryResponseBody;
+  let queryParsedResponse;
+  let returnResponse;
+
+  switch (type) {
+    case 'POST':
+      options.body = `${graphEndpoint} { ${graphMethod}(${rawData}) }`;
+      queryResponse = await request(options);
+      queryParsedResponse = JSON.parse(queryResponse).data[graphMethod];
+      queryResponseBody = queryParsedResponse.body;
+      returnResponse = {
+        status: queryParsedResponse.status,
+        result: queryParsedResponse.result,
+      };
+      Object.keys(queryResponseBody).forEach((key) => {
+        returnResponse[key] = queryResponseBody[key];
+      });
+      break;
+    case 'GET':
+      break;
+    case 'PUT':
+      break;
+    case 'DELETE':
+      break;
+    default:
+      break;
+  }
+  return returnResponse;
 };

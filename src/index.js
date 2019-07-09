@@ -74,7 +74,7 @@ class BcxSdk {
       }
     });
 
-    return requestProvider.postRequest(this.url, data, 'transaction', 'searchTransaction');
+    return requestProvider.postRequest(this.url, data, 'query', 'searchTransaction');
   }
 
   /**
