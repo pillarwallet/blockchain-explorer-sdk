@@ -65,7 +65,7 @@ describe('BcxSdk Class', () => {
           protocol: 'Ethereum',
           network: 'mainnet',
         },
-        'transaction',
+        'query',
         'searchTransaction',
       );
     });
@@ -79,7 +79,7 @@ describe('BcxSdk Class', () => {
           protocol: 'Ethereum',
           network: 'mainnet',
         },
-        'transaction',
+        'query',
         'searchTransaction',
       );
     });

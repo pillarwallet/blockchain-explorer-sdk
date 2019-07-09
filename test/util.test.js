@@ -19,33 +19,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+let mockRequest;
+jest.mock('request-promise', () => {
+  mockRequest = jest.fn();
+  return mockRequest;
+});
 const requestUtil = require('../src/util/RequestUtil');
 
 describe('Request unit Test', () => {
-  beforeEach(() => {
-    jest.mock('request-promise');
+  afterAll(() => {
+    jest.restoreAllMocks();
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('Expected to call request', () => {
+  it('Expected to call request', async () => {
     const options = {
       uri: 'arg1',
-      method: 'arg3',
+      method: 'POST',
       qs: 'arg4',
       headers: { 'Content-Type': 'application/json' },
-      body: 'arg2',
-      json: true,
+      // eslint-disable-next-line no-useless-escape
+      body: 'query { searchTransaction(\"arg2\") }',
     };
-
-    const test = requestUtil.fetchRequests('arg1', 'arg2', 'arg3', 'arg4');
-
-    expect(test.uri.href).toBe(options.uri);
-    expect(test.body).toBe(options.body);
-    expect(test.method).toBe(options.method);
-    expect(test._rp_options.qs).toBe(options.qs); 
-    expect(test.headers).toEqual(options.headers);
+    const responseObject = {
+      data: {
+        searchTransaction: {
+          body: {
+            txHistory: [],
+            txCount: 1,
+          },
+        },
+      },
+    };
+    mockRequest.mockImplementation(() => JSON.stringify(responseObject));
+    await requestUtil.fetchRequests('arg1', 'arg2', 'POST', 'arg4', 'query', 'searchTransaction');
+    expect(mockRequest).toBeCalledWith(options);
   });
 });
