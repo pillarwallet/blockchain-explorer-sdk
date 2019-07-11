@@ -19,39 +19,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-let mockRequest;
-jest.mock('request-promise', () => {
-  mockRequest = jest.fn();
-  return mockRequest;
-});
-const requestUtil = require('../src/util/RequestUtil');
+const request = require('request-promise');
 
-describe('Request unit Test', () => {
-  afterAll(() => {
-    jest.restoreAllMocks();
-  });
-
-  it('Expected to call request', async () => {
-    const options = {
-      uri: 'arg1',
-      method: 'POST',
-      qs: 'arg4',
-      headers: { 'Content-Type': 'application/json' },
-      // eslint-disable-next-line no-useless-escape
-      body: 'query { searchTransaction(\"arg2\") }',
-    };
-    const responseObject = {
-      data: {
-        searchTransaction: {
-          body: {
-            txHistory: [],
-            txCount: 1,
-          },
-        },
-      },
-    };
-    mockRequest.mockImplementation(() => JSON.stringify(responseObject));
-    await requestUtil.fetchRequests('arg1', 'arg2', 'POST', 'arg4', 'query', 'searchTransaction');
-    expect(mockRequest).toBeCalledWith(options);
-  });
-});
+/**
+* Fetch https requests
+* @method fetchRequests
+* @param  {string} url
+* @param  {object} parameters
+*/
+exports.fetchRequests = async (parameters) => {
+  const options = {
+    uri: parameters.uri,
+    method: parameters.method,
+    qs: parameters.qs,
+    headers: parameters.headers,
+    body: parameters.body,
+  };
+  const queryResponse = await request(options);
+  return queryResponse;
+};
