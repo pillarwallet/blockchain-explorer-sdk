@@ -26,7 +26,7 @@ class BcxSdk {
     this.url = configuration.apiUrl;
     this.protocol = configuration.protocol || null;
     this.network = configuration.network || 'eth';
-    this.methods = new MethodsFactory(this);
+    return new MethodsFactory(this);
   }
 }
 module.exports = BcxSdk;

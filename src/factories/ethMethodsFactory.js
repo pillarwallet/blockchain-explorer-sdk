@@ -20,7 +20,7 @@ class EthMethodsFactory {
    * @param {Object} payload
    * @return {Promise<object>} Returns a promise
    */
-  txHistory(payload) {
+  async txHistory(payload) {
     try {
       validate(txHistorySchema, payload);
     } catch (e) {
@@ -50,7 +50,28 @@ class EthMethodsFactory {
     formattedPayload = formattedPayload.replace(/"(\w+)"\s*:/g, '$1:');
     this.options.method = 'POST';
     this.options.body = `query { searchTransaction(${formattedPayload}) }`;
-    return fetchRequests(this.options);
+
+    const response = await fetchRequests(this.options);
+    const parsedResponse = JSON.parse(response);
+    const { result, body, txCount } = parsedResponse.data.searchTransaction;
+    const formatted = body.txHistory.map((element) => {
+      const temp = {};
+      const parsedPayload = JSON.parse(element.payload);
+      Object.assign(temp, element, parsedPayload);
+      delete temp.payload;
+      delete temp.hash;
+      delete temp.r;
+      delete temp.s;
+      delete temp.v;
+      return temp;
+    });
+    return {
+      txHistory: {
+        result,
+        txHistory: formatted,
+        txCount,
+      },
+    };
   }
 
   /**
