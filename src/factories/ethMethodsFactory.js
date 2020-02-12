@@ -21,7 +21,7 @@ SOFTWARE.
 */
 const { validate } = require('../schemas');
 const config = require('../config');
-const { fetchGraphRequests, fetchRestRequests } = require('../util/requester');
+const { fetchRequests } = require('../util/requester');
 const txHistorySchema = require('../schemas/txHistory.json');
 const balanceHistorySchema = require('../schemas/balanceHistory.json');
 const gasInfoSchema = require('../schemas/gasInfo.json');
@@ -80,7 +80,7 @@ class EthMethodsFactory {
     this.options.method = 'POST';
     this.options.body = `query { ${endpoint}(${formattedPayload}) }`;
 
-    const response = await fetchGraphRequests(this.options);
+    const response = await fetchRequests(this.options);
     const parsedResponse = JSON.parse(response);
     const {
       result,
@@ -126,7 +126,7 @@ class EthMethodsFactory {
     const endpoint = config.get('bcxGasStation');
     this.options.method = 'GET';
     this.options.uri = this.options.uri + endpoint;
-    return fetchRestRequests(this.options);
+    return fetchRequests(this.options);
   }
 
   /**
@@ -146,7 +146,7 @@ class EthMethodsFactory {
     const endpoint = config.get('bcxGasInfo');
     this.options.method = 'GET';
     this.options.uri = this.options.uri + endpoint;
-    return fetchRestRequests(this.options);
+    return fetchRequests(this.options);
   }
 
   /**
@@ -175,7 +175,7 @@ class EthMethodsFactory {
     this.options.method = 'POST';
     this.options.body = `query { ${endpoint}(${formattedPayload}) }`;
 
-    const response = await fetchGraphRequests(this.options);
+    const response = await fetchRequests(this.options);
     const parsedResponse = JSON.parse(response);
     const { result, body } = parsedResponse.data.dailyLedger;
     const formatted = body.balanceHistory;

@@ -20,31 +20,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 const request = require('request-promise');
-
 /**
-* Fetch Graph requests
-* @method fetchGraphRequests
+* Fetch requests
+* @method fetchRequests
 * @param  {object} parameters
 */
-exports.fetchGraphRequests = async (parameters) => {
-  const options = {
-    uri: parameters.uri,
-    method: parameters.method,
-    qs: parameters.qs,
-    headers: parameters.headers,
-    body: parameters.body,
-  };
-  const queryResponse = await request(options);
-  return queryResponse;
-};
-
-
-/**
-* Fetch Rest requests
-* @method fetchRestRequests
-* @param  {object} parameters
-*/
-exports.fetchRestRequests = async (parameters) => {
+exports.fetchRequests = async (parameters) => {
   const options = {
     uri: parameters.uri,
     method: parameters.method,
