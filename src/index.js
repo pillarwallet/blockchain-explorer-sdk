@@ -20,12 +20,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 const MethodsFactory = require('./factories/methodsFactory');
+const config = require('./config');
 
 class BcxSdk {
   constructor(configuration) {
-    this.url = configuration.apiUrl;
-    this.protocol = configuration.protocol || null;
-    this.network = configuration.network || 'eth';
+    this.url = configuration.apiUrl || config.get('bcxServerUrl');
+    this.protocol = configuration.protocol || config.get('protocol');
+    this.network = configuration.network || config.get('network');
     return new MethodsFactory(this);
   }
 }

@@ -22,12 +22,29 @@ SOFTWARE.
 const request = require('request-promise');
 
 /**
-* Fetch https requests
-* @method fetchRequests
-* @param  {string} url
+* Fetch Graph requests
+* @method fetchGraphRequests
 * @param  {object} parameters
 */
-exports.fetchRequests = async (parameters) => {
+exports.fetchGraphRequests = async (parameters) => {
+  const options = {
+    uri: parameters.uri,
+    method: parameters.method,
+    qs: parameters.qs,
+    headers: parameters.headers,
+    body: parameters.body,
+  };
+  const queryResponse = await request(options);
+  return queryResponse;
+};
+
+
+/**
+* Fetch Rest requests
+* @method fetchRestRequests
+* @param  {object} parameters
+*/
+exports.fetchRestRequests = async (parameters) => {
   const options = {
     uri: parameters.uri,
     method: parameters.method,

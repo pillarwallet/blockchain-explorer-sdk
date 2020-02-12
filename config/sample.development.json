@@ -1,0 +1,9 @@
+{
+    "bcxServerUrl": "http://bcx-server.io",
+    "bcxTxHistory": "",
+    "bcxBalanceHistory": "",
+    "bcxGasInfo": "/wallet-client/gasinfo",
+    "bcxGasStation": "/wallet-client/gasstation",
+    "network": "testnet",
+    "protocol": "eth"
+}
