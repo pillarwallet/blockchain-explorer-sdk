@@ -19,13 +19,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-const EthMethodsFactory = require('./ethMethodsFactory');
+const EthMethods = require('./ethMethods');
 
 class MethodsFactory {
   constructor(sdk) {
     switch (sdk.protocol) {
       case 'eth':
-        this.methods = new EthMethodsFactory(sdk);
+        this.methods = new EthMethods(sdk);
         break;
       case 'btc':
         break;

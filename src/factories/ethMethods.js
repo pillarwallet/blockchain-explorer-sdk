@@ -26,10 +26,11 @@ const txHistorySchema = require('../schemas/txHistory.json');
 const balanceHistorySchema = require('../schemas/balanceHistory.json');
 const gasInfoSchema = require('../schemas/gasInfo.json');
 
-class EthMethodsFactory {
+class EthMethods {
   constructor(sdk) {
+    this.sdk = sdk;
     this.options = {
-      uri: sdk.url,
+      uri: this.sdk.url,
       headers: { 'Content-Type': 'application/json' },
     };
 
@@ -38,6 +39,7 @@ class EthMethodsFactory {
     this.txHistory = this.txHistory.bind(this);
     this.balanceHistory = this.balanceHistory.bind(this);
     this.gasStation = this.gasStation.bind(this);
+    this.gasInfo = this.gasInfo.bind(this);
   }
 
   /**
@@ -79,7 +81,6 @@ class EthMethodsFactory {
     const endpoint = config.get('bcxTxHistory');
     this.options.method = 'POST';
     this.options.body = `query { ${endpoint}(${formattedPayload}) }`;
-
     const response = await fetchRequests(this.options);
     const parsedResponse = JSON.parse(response);
     const {
@@ -125,8 +126,10 @@ class EthMethodsFactory {
   async gasStation() {
     const endpoint = config.get('bcxGasStation');
     this.options.method = 'GET';
-    this.options.uri = this.options.uri + endpoint;
-    return fetchRequests(this.options);
+    this.options.uri = this.sdk.url + endpoint;
+    delete this.options.body;
+    const response = await fetchRequests(this.options);
+    return response;
   }
 
   /**
@@ -145,7 +148,8 @@ class EthMethodsFactory {
     }
     const endpoint = config.get('bcxGasInfo');
     this.options.method = 'GET';
-    this.options.uri = this.options.uri + endpoint;
+    this.options.uri = this.sdk.url + endpoint;
+    delete this.options.body;
     return fetchRequests(this.options);
   }
 
@@ -156,7 +160,10 @@ class EthMethodsFactory {
    */
   async balanceHistory(payload) {
     try {
-      validate(balanceHistorySchema, payload);
+      validate(
+        balanceHistorySchema,
+        payload,
+      );
     } catch (e) {
       return Promise.reject(e);
     }
@@ -174,10 +181,12 @@ class EthMethodsFactory {
     const endpoint = config.get('bcxBalanceHistory');
     this.options.method = 'POST';
     this.options.body = `query { ${endpoint}(${formattedPayload}) }`;
-
     const response = await fetchRequests(this.options);
     const parsedResponse = JSON.parse(response);
-    const { result, body } = parsedResponse.data.dailyLedger;
+    const {
+      result,
+      body,
+    } = parsedResponse.data.dailyLedger;
     const formatted = body.balanceHistory;
     return {
       balanceHistory: {
@@ -187,4 +196,4 @@ class EthMethodsFactory {
     };
   }
 }
-module.exports = EthMethodsFactory;
+module.exports = EthMethods;
