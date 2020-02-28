@@ -25,45 +25,57 @@ const convict = require('convict');
 const config = convict({
   env: {
     doc: 'The application environment.',
-    format: ['production', 'development', 'qa'],
+    format: ['production', 'development', 'test'],
     default: 'development',
     env: 'NODE_ENV',
   },
   bcxServerUrl: {
+    doc: 'The server url.',
     format: 'url',
-    default: '',
-    arg: 'bcxServerUrl',
+    default: 'https://bcx-api.io',
     env: 'BCX_SERVER_URL',
   },
-  bcxGetBalance: {
-    format: 'url',
-    default: '',
-    arg: 'bcxGetBalance',
-    env: 'BCX_GET_BALANCE',
-  },
   bcxTxHistory: {
-    format: 'url',
-    default: '',
-    arg: 'bcxTxHistory',
+    doc: 'The transaction history graph endpoint.',
+    format: 'String',
+    default: 'searchTransaction',
     env: 'BCX_TX_HISTORY',
   },
-  bcxGasInfo: {
-    format: 'url',
-    default: '',
-    arg: 'bcxGasInfo',
-    env: 'BCX_GAS_INFO',
+  bcxBalanceHistory: {
+    doc: 'The balance history graph endpoint.',
+    format: 'String',
+    default: 'dailyLedger',
+    env: 'BCX_BALANCE_HISTORY',
   },
   bcxGasStation: {
-    format: 'url',
-    default: '',
-    arg: 'bcxGasStation',
+    doc: 'The gas station endpoint.',
+    format: 'String',
+    default: 'gasStation',
     env: 'BCX_GAS_STATION',
-  }
+  },
+  network: {
+    doc: 'The network (mainnet/testnet).',
+    format: 'String',
+    default: 'mainnet',
+    env: 'BCX_NETWORK',
+  },
+  protocol: {
+    doc: 'The protocol (eth/btc...).',
+    format: 'String',
+    default: 'eth',
+    env: 'BCX_PROTOCOL',
+  },
 });
 
 // Load environment dependent configuration
 const env = config.get('env');
-config.loadFile(`./config/${env}.json`);
+try {
+  config.loadFile(`./config/${env}.json`);
+} catch (_err) {
+  // Ignoring "ENOENT: no such file or directory exception"
+  // in case config file not provided
+  // Assigning default values to variables.
+}
 
 // Perform validation
 config.validate({
