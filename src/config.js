@@ -47,16 +47,10 @@ const config = convict({
     default: 'dailyLedger',
     env: 'BCX_BALANCE_HISTORY',
   },
-  bcxGasInfo: {
-    doc: 'The gas info endpoint.',
-    format: 'String',
-    default: '/wallet-client/gasinfo',
-    env: 'BCX_GAS_INFO',
-  },
   bcxGasStation: {
     doc: 'The gas station endpoint.',
     format: 'String',
-    default: '/wallet-client/gasstation',
+    default: 'gasStation',
     env: 'BCX_GAS_STATION',
   },
   network: {

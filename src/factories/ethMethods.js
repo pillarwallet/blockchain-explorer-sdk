@@ -24,7 +24,6 @@ const config = require('../config');
 const { fetchRequests } = require('../util/requester');
 const txHistorySchema = require('../schemas/txHistory.json');
 const balanceHistorySchema = require('../schemas/balanceHistory.json');
-const gasInfoSchema = require('../schemas/gasInfo.json');
 
 class EthMethods {
   constructor(sdk) {
@@ -39,7 +38,6 @@ class EthMethods {
     this.txHistory = this.txHistory.bind(this);
     this.balanceHistory = this.balanceHistory.bind(this);
     this.gasStation = this.gasStation.bind(this);
-    this.gasInfo = this.gasInfo.bind(this);
   }
 
   /**
@@ -125,32 +123,10 @@ class EthMethods {
    */
   async gasStation() {
     const endpoint = config.get('bcxGasStation');
-    this.options.method = 'GET';
-    this.options.uri = this.sdk.url + endpoint;
-    delete this.options.body;
+    this.options.method = 'POST';
+    this.options.body = `query { ${endpoint} }`;
     const response = await fetchRequests(this.options);
     return response;
-  }
-
-  /**
-   * Sends a GET requests to gas info endpoint
-   * @param {Object} payload
-   * @return {Promise<object>} Returns a promise
-   */
-  async gasInfo(payload) {
-    try {
-      validate(
-        gasInfoSchema,
-        payload,
-      );
-    } catch (e) {
-      return Promise.reject(e);
-    }
-    const endpoint = config.get('bcxGasInfo');
-    this.options.method = 'GET';
-    this.options.uri = this.sdk.url + endpoint;
-    delete this.options.body;
-    return fetchRequests(this.options);
   }
 
   /**
