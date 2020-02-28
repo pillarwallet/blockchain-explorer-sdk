@@ -78,15 +78,8 @@ describe('Tests whether EthMethods call the correct endpoints.', () => {
 
   test('gasStation() test', async () => {
     await methodsFactory.gasStation();
-    const { uri } = requester.fetchRequests.mock.calls[0][0];
+    const { body } = requester.fetchRequests.mock.calls[0][0];
     const endpoint = config.get('bcxGasStation');
-    expect(uri).toMatch(new RegExp(`(${endpoint})`));
-  });
-
-  test('gasInfo() test', async () => {
-    await methodsFactory.gasInfo({});
-    const { uri } = requester.fetchRequests.mock.calls[0][0];
-    const endpoint = config.get('bcxGasInfo');
-    expect(uri).toMatch(new RegExp(`(${endpoint})`));
+    expect(body).toMatch(new RegExp(`(${endpoint})`));
   });
 });
