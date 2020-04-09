@@ -1,7 +1,7 @@
 {
-  "name": "blockchain-explorer-sdk",
-  "version": "0.1.2",
-  "description": "The Blockchain Explorer SDK (aka BCX).",
+  "name": "@pillarwallet/blockchain-explorer-sdk",
+  "version": "1.1.2",
+  "description": "The Blockchain Explorer SDK.",
   "main": "./dist/index.js",
   "scripts": {
     "lint": "eslint .",
