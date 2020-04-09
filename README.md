@@ -6,7 +6,7 @@ Pillar blockchain explorer SDK for [node](http://nodejs.org).
 ## Install
 
 ```bash
-$ npm install @pillarwallet/bcx-api
+$ npm install @pillarwallet/blockchain-explorer-sdk
 ```
 - copy /.sample.env file to /.env with your local development settings
 **Development**
@@ -15,7 +15,7 @@ To enable dev mode - add `NODE_ENV=development` to `.env` file
 ## Usage
 
 ```js
-var bcx = require('@pillarwallet/bcx-api')
+var bcx = require('@pillarwallet/blockchain-explorer-sdk')
 bcx = new BCX({apiUrl:`https://apiurl.io:${port}`)
 ```
 ####  Transaction history, gas station, and gas info
