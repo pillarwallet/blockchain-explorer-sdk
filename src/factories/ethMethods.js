@@ -126,7 +126,9 @@ class EthMethods {
     this.options.method = 'POST';
     this.options.body = `query { ${endpoint} }`;
     const response = await fetchRequests(this.options);
-    return response;
+    const parsedResponse = JSON.parse(response);
+    const gasStation = JSON.parse(parsedResponse.data.gasStation);
+    return gasStation;
   }
 
   /**
