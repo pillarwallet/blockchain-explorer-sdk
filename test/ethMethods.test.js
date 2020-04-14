@@ -40,6 +40,7 @@ const mockResponse = {
         txHistory: [],
       },
     },
+    gasStation: '{"result": "success"}',
   },
 };
 
