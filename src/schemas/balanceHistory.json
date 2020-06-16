@@ -1,0 +1,27 @@
+{
+  "title": "BCX SDK - Balance History",
+  "description": "Schema definition for BCX SDK - balanceHistory method",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "wallet": {
+      "type": "string"
+    },
+    "lt_blockNumber": {
+      "type": "number"
+    },
+    "gt_blockNumber": {
+      "type": "number"
+    },
+    "asset": {
+      "type": "string"
+    },
+    "limit": {
+      "type": "number"
+    },
+    "offset": {
+      "type": "number"
+    }
+  },
+  "required": ["wallet", "asset"]
+}
