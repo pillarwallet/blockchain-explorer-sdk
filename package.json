@@ -38,6 +38,7 @@
     "jest-html-reporter": "2.0.0"
   },
   "jest": {
+    "testEnvironment": "node",
     "roots": [
       "src",
       "test"
