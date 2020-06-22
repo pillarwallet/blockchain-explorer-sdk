@@ -6,7 +6,7 @@ Pillar blockchain explorer SDK for [node](http://nodejs.org).
 ## Install
 
 ```bash
-$ npm install @pillarwallet/blockchain-explorer-sdk
+$ npm install @pillarwallet/bcx-api
 ```
 - copy /.sample.env file to /.env with your local development settings
 **Development**
@@ -15,7 +15,7 @@ To enable dev mode - add `NODE_ENV=development` to `.env` file
 ## Usage
 
 ```js
-var bcx = require('@pillarwallet/blockchain-explorer-sdk')
+var bcx = require('@pillarwallet/bcx-api')
 bcx = new BCX({apiUrl:`https://apiurl.io:${port}`)
 ```
 ####  Transaction history, gas station, and gas info
@@ -36,9 +36,9 @@ bcx.txHistory(payload).then(console.log)
 ```js
 {
   [
-  transaction:
+  transaction: 
   {
-    schema:
+    schema: 
     {
       hash: '0xfe0083d38169d3d0fa0330558ef917c6e4884e318df8abaa26cec540ee4f49c',
       nonce: 264,
@@ -53,9 +53,9 @@ bcx.txHistory(payload).then(console.log)
       input: 'string'
     }
   },
-  receipt:
+  receipt: 
   {
-    schema:
+    schema: 
     {
       blockHash: '0xfe0083d38169d3d0fa0330558ef917c6e4884e318df8abaa26cec540ee4f49c',
       blockNumber: 2980845,
@@ -100,14 +100,9 @@ bcx.gasStation().then(console.log);
 
 </p></details>
 
-###### Balance history
+###### Gas Info
 ```js
-const payload = {
-      wallet: '0xe6220A8FF48E2F94D3B4Cddf8Ba1d69f8276f895',
-      asset: 'ETH',
-    }
-
-bcx.balanceHistory(payload).then(console.log);
+bcx.gasInfo().then(console.log);
 ```
 
 <details><summary>Response</summary><p>
@@ -115,16 +110,9 @@ bcx.balanceHistory(payload).then(console.log);
 ```js
 {
 result: 'success',
-balanceHistory: [
-    {
-      blockNumber: 4678000,
-      wallet: '0x31be343b94f860124dc4fee378fdcbd38c102f88',
-      asset: 'ETH',
-      total_incoming: '8881760853319325218122752.0',
-      total_outgoing: '12552800896184559873577984.0',
-      total_balance: '3671040042865234655455232.0',
-    },
-    ...]
+avgGasPrice: 6984665476.524783,
+stdDev: 4497814031.576423,
+topBlock: 6795711
 }
 ```
 

@@ -1,8 +1,4 @@
-version: 2.1
-
-orbs:
-  slack: circleci/slack@3.4.2
-
+version: 2
 jobs:
   build:
     working_directory: ~/blockchain-explorer-sdk
@@ -33,12 +29,8 @@ jobs:
           root: dist
           paths:
             - index.js
-      - slack/status:
-          fail_only: true
-          failure_message: "Triggered by: *${CIRCLE_USERNAME}* \n\n Oops! Since *$CIRCLE_JOB* has failed no tests can be run! :circleci-fail:"
-          webhook: "${SLACK_WEBHOOK_URL}"
 
-  tests:
+  test:
     working_directory: ~/blockchain-explorer-sdk
     docker:
       - image: circleci/node:10.14.0
@@ -64,10 +56,6 @@ jobs:
       - store_artifacts:
           path: ./reports/
           destination: reports
-      - slack/status:
-          fail_only: true
-          failure_message: "Triggered by: *${CIRCLE_USERNAME}* \n\n Oops! *$CIRCLE_JOB* have failed, please fix them! :circleci-fail:"
-          webhook: "${SLACK_WEBHOOK_URL}"
 
   publish:
     working_directory: ~/blockchain-explorer-sdk
@@ -95,22 +83,18 @@ jobs:
           command: |
             chmod +x .circleci/announcePublish.sh
             .circleci/announcePublish.sh "BCX SDK" "$(node -e "console.log(require('./package.json').name)")@$(node -e "console.log(require('./package.json').version)")"
-      - slack/status:
-          fail_only: true
-          failure_message: "Triggered by: *${CIRCLE_USERNAME}* \n\n Failed, new package is not published! :circleci-fail:"
-          webhook: "${SLACK_WEBHOOK_URL}"
 
 workflows:
-  version: 2.1
+  version: 2
   build_test_and_deploy:
     jobs:
       - build
-      - tests:
+      - test:
           requires:
             - build
       - publish:
           requires:
-            - tests
+            - test
           filters:
             branches:
               only:

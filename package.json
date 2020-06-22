@@ -1,7 +1,7 @@
 {
-  "name": "@pillarwallet/blockchain-explorer-sdk",
-  "version": "1.0.0",
-  "description": "The Blockchain Explorer SDK.",
+  "name": "blockchain-explorer-sdk",
+  "version": "0.1.2",
+  "description": "The Blockchain Explorer SDK (aka BCX).",
   "main": "./dist/index.js",
   "scripts": {
     "lint": "eslint .",
@@ -38,6 +38,7 @@
     "jest-html-reporter": "2.0.0"
   },
   "jest": {
+    "testEnvironment": "node",
     "roots": [
       "src",
       "test"
@@ -52,8 +53,7 @@
     "coverageReporters": [
       "lcov"
     ],
-    "coverageDirectory": "./reports",
-    "testURL": "http://localhost/"
+    "coverageDirectory": "./reports"
   },
   "jest-html-reporter": {
     "pageTitle": "Jest results",

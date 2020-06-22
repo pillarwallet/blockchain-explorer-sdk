@@ -4,12 +4,6 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "protocol": {
-      "type": "string"
-    },
-    "network": {
-      "type": "string"
-    },
     "address1": {
       "type": "string"
     },
@@ -19,21 +13,12 @@
     "asset": {
       "type": "string"
     },
-    "txHash": {
-      "type": "string"
-    },
-    "sort": {
-      "type": "string"
-    },
-    "order": {
+    "nbTx": {
       "type": "number"
     },
     "fromIndex": {
       "type": "number"
-    },
-    "nbTx": {
-      "type": "number"
     }
   },
-  "required": []
+  "required": ["address1"]
 }
