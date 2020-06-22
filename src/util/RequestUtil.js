@@ -20,19 +20,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 const request = require('request-promise');
+
 /**
-* Fetch requests
+* Fetch https requests
 * @method fetchRequests
-* @param  {object} parameters
+* @param  {String} url
+* @param  {Object} body
+* @param  {String} Type
 */
-exports.fetchRequests = async (parameters) => {
+exports.fetchRequests = (url, body, type, queryParams) => {
   const options = {
-    uri: parameters.uri,
-    method: parameters.method,
-    qs: parameters.qs,
-    headers: parameters.headers,
-    body: parameters.body,
+    uri: url,
+    method: type,
+    qs: queryParams,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body,
+    json: true,
   };
-  const queryResponse = await request(options);
-  return queryResponse;
+
+  return request(options);
 };

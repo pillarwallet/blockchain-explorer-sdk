@@ -1,8 +1,0 @@
-{
-    "bcxServerUrl": "http://bcx-server.io",
-    "bcxTxHistory": "",
-    "bcxBalanceHistory": "",
-    "bcxGasStation": "",
-    "network": "testnet",
-    "protocol": "eth"
-}

@@ -19,55 +19,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-const convict = require('convict');
+const requesterUtil = require('../util/RequestUtil');
 
-// Define a schema
-const config = convict({
-  env: {
-    doc: 'The application environment.',
-    format: ['production', 'development', 'qa'],
-    default: 'development',
-    env: 'NODE_ENV',
-  },
-  bcxServerUrl: {
-    format: 'url',
-    default: '',
-    arg: 'bcxServerUrl',
-    env: 'BCX_SERVER_URL',
-  },
-  bcxGetBalance: {
-    format: 'url',
-    default: '',
-    arg: 'bcxGetBalance',
-    env: 'BCX_GET_BALANCE',
-  },
-  bcxTxHistory: {
-    format: 'url',
-    default: '',
-    arg: 'bcxTxHistory',
-    env: 'BCX_TX_HISTORY',
-  },
-  bcxGasInfo: {
-    format: 'url',
-    default: '',
-    arg: 'bcxGasInfo',
-    env: 'BCX_GAS_INFO',
-  },
-  bcxGasStation: {
-    format: 'url',
-    default: '',
-    arg: 'bcxGasStation',
-    env: 'BCX_GAS_STATION',
-  }
-});
+module.exports = {
+/**
+  * Https POST request
+  * @method registerAccount
+  * @param  {String} url
+  * @param  {Object} body
+  */
+  postRequest: (url, body) => requesterUtil.fetchRequests(url, body, 'POST', undefined),
 
-// Load environment dependent configuration
-const env = config.get('env');
-config.loadFile(`./config/${env}.json`);
+  /**
+    * Https GET request
+    * @method registerAccount
+    * @param  {String} url
+    * @param  {Object} body
+    */
+  getRequest: (url, body) => requesterUtil.fetchRequests(url, undefined, 'GET', body),
 
-// Perform validation
-config.validate({
-  allowed: 'strict',
-});
+  /**
+    * Https PUT request
+    * @method registerAccount
+    * @param  {String} url
+    * @param  {Object} body
+    */
+  putRequest: (url, body) => requesterUtil.fetchRequests(url, body, 'PUT', undefined),
 
-module.exports = config;
+  /**
+    * Https DELETE request
+    * @method registerAccount
+    * @param  {String} url
+    * @param  {Object} body
+    */
+  deleteRequest: (url, body) => requesterUtil.fetchRequests(url, body, 'DELETE', undefined),
+};
