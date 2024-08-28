@@ -25,7 +25,7 @@
     "convict": "4.2.0",
     "request": "2.87.0",
     "request-promise": "4.2.2",
-    "webpack": "4.10.2",
+    "webpack": "5.94.0",
     "webpack-cli": "3.0.1"
   },
   "devDependencies": {
